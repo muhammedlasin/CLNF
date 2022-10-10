@@ -1,15 +1,42 @@
 // const url= 'https://newsdata.io/api/1/news?apikey=pub_120235204380c1571d1673af41ebead6aa38e&language=en';
 
 
-// async function fetchText() {
-//     let response = await fetch(url);
-//     let data = await response.json();
-//     let img =data.results[2].image_url;
+async function fetchText(url) {
+    let response = await fetch(url);
+    let data = await response.json();
+    console.log(data.results);
+    showNews(data.results);
+}
 
-//     console.log(data.results[2].image_url);
-// }
+function showNews(data){
+    const ul = document.getElementById('display');
+    const list = document.createDocumentFragment();
 
-// fetchText();
+    data.map(function (post) {
+        let li = document.createElement('li');
+        let image = document.createElement('div');
+        image.classList.add("image");
+        let content = document.createElement('div');
+        content.classList.add("content");
+        let title = document.createElement('h1');
+        let date= document.createElement('p')
+        date.classList.add("content-date");
+        let body = document.createElement('p');
+        image.style.backgroundImage=`url('${post.image_url}')`
+        title.innerHTML = `${post.title}`;
+        date.innerHTML = `${post.pubDate.split(" ")[0]}`
+        body.innerHTML = `${post.content}`;
+
+        li.appendChild(image);
+        content.appendChild(title);
+        content.appendChild(date);
+        content.appendChild(body);
+        li.appendChild(content);
+        list.appendChild(li);
+    });
+
+    ul.appendChild(list);
+}
 
 
 function showSearch(){
@@ -44,7 +71,6 @@ fetch('https://current-news.p.rapidapi.com/news', options)
                     let x = Math.floor(Math.random() * 20);
                     let img =data.news[x].urlToImage;
                     let heading = data.news[x].title;
-                    console.log(data.news);
                     document.getElementById("main-news").style.backgroundImage = `url(${img})`;
                     document.getElementById("main-title").innerHTML = heading;
                 }
@@ -58,7 +84,18 @@ fetch('https://current-news.p.rapidapi.com/news', options)
         )
 
         
+function handleSearch(){
+    const val = document.getElementById("search-news").value;
+    console.log(val)
+}
 
+function searchNews(){
+    const val = document.getElementById("search-news").value;
+    const url= `https://newsdata.io/api/1/news?apikey=pub_121401ca00771f49d680f781ee5f7248208e4&q=${val}&language=en`;
+   fetchText(url);
+   
+
+}
 
 // fetch('https://current-news.p.rapidapi.com/news', options)
 // 	.then(response => response.json())
