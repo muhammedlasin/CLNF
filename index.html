@@ -5,16 +5,43 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>CLNF</title>
 </head>
 <body>
     <header class="header">
-  
+        <a href="#default" class="logo">CLNF</a>
+        <div class="header-right">
+          <a class="active" href="#home">Home</a>
+          <a href="#contact">News</a>
+          <a href="#about">Sport</a>
+          <a href="#about">Health</a>
+          <a href="#about">Weather</a>
+          <span><img onclick="showSearch()"class="search" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4frpd-PZM6TUHnoSY-_DgGrqErkwph3F0cEPz92hBMwtjNLn49mPownYUmhTHRjgV2C0&usqp=CAU"/></span>
+        </div>
     </header>
 
-    <div class="parent">
-        <div class="banner">
+    <div class="search-div" id="box-overlay">
+        <div class="date">
+        <label >From: </label>
+        <input type="date" />
+        </div>
+        <div class="date">
+            <label >To: </label>
+            <input type="date" />
+            </div>
+        <input class="search-bar" placeholder="Search" />
+    </div>
 
+    <div class="parent" id="parent-div">
+
+        <div class="box overlay"></div>
+
+        <div class="banner" id="main-news">
+            <div class="banner-content">
+                <h1 id="main-title"></h1>
+            
+            </div>
         </div>
         <div class="content-main">
             <div class="content1">
@@ -35,5 +62,6 @@
     <footer>
 
     </footer>
+    <script src="script.js"></script>
 </body>
 </html>
