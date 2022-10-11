@@ -5,11 +5,86 @@
 
 header {
     width: 100%;
-    height: 80px;
     background-color: black;
     position: sticky;
     top: 0;
     z-index: 10;
+    overflow: hidden;
+    padding: 20px 10px;
+}
+
+.header a {
+    float: left;
+    color: white;
+    text-align: center;
+    padding: 12px;
+    text-decoration: none;
+    font-size: 18px; 
+    line-height: 25px;
+    border-radius: 4px;
+  }
+  
+  .header a.logo {
+    font-size: 25px;
+    font-weight: bold;
+  }
+  
+  .header a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  .header a.active {
+    background-color: dodgerblue;
+    color: white;
+  }
+  
+  .header-right {
+    float: right;
+    margin-right: 11%;
+  }
+  .logo{
+  margin-left: 9%;
+  }
+
+  .search{
+    width: 30px;
+    height: 30px;
+    margin-top: 10px;
+  }
+  .header span:hover {
+    background-color: #ddd;
+    color: black;
+  }
+.search-div{
+    height: 80px;
+    width: 80%;
+    background-color: white;
+    margin: 0 auto;
+}
+
+.search-bar{
+    width: 55%;
+    height: 30px;
+    margin-top: 20px ;
+    border: solid 2px;
+    border-radius: 5px;
+}
+.search-btn{
+    float: right;
+    margin-top: 20px;
+    height: 34px;
+    width: 3.5%;
+    border: solid 2px;
+    border-radius: 5px;
+    background-color: black;
+    color: white;
+}
+.date{
+    width: 20%;
+    height: 30px;
+    float: left;
+    margin-top: 30px ;
 }
 
 .parent {
@@ -28,10 +103,65 @@ header {
 
     background-color: brown;
 
-
-    background-color: #fff;
+    background-size: cover ;
+    
+}
+.banner-content{
+    max-width: 800px;
+    height: 190px;
+    margin-left: 150px;
+    padding-top: 500px;
+    padding-left: 15px;
+    color: white;
+}
+.banner-content h1{
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    padding: 10px;
+}
+footer{
+    width: 100%;
+    background-color: #3f3f3f;
+    height: 300px;
 }
 
+#box-overlay{
+    display: none;
+    
+}
+
+.display-news{
+    width: 80%;
+    margin: 0 auto;
+
+}
+.display-news li{
+    list-style: none;
+}
+ 
+.image{
+    width: 35%;
+    height: 250px;
+    background-color: yellow;
+    float: left;
+    margin-top: 30px;
+    background-size: cover;
+}
+
+.content{
+    width: 60%;
+    height: 250px;
+    background-color: white;
+    float: right;
+    margin-top: 30px;
+    overflow: hidden;
+}
+.content p{
+    margin-top: 5px;
+}
+.content-date{
+    font-size: 20px;
+}
 
 .content>ul {
     overflow: auto;
