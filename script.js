@@ -1,26 +1,26 @@
 const defaultImageUrl = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_IonlVghwpmFgGxdJRZZIbjGI6Y2320yt7g&usqp=CAU';
 
 async function fetchSportsData() {
-    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_120235204380c1571d1673af41ebead6aa38e&category=sports&language=en');
+    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_121401ca00771f49d680f781ee5f7248208e4&category=sports&language=en');
     let data = await response.json();
     console.log(data.results);
-    showSports(data.results);
+    show(data.results,'sports');
 }
 
 async function fetchNewsData() {
-    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_120235204380c1571d1673af41ebead6aa38e&category=top&language=en');
-    let data = response.json();
-    //showNews(data);
+    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_121401ca00771f49d680f781ee5f7248208e4&category=top&language=en');
+    let data = await response.json();
+    show(data.results,'news');
 }
 
 async function fetchHealthData() {
-    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_120235204380c1571d1673af41ebead6aa38e&category=health&language=en');
-    let data = response.json();
-    //showHealth(data);
+    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_121401ca00771f49d680f781ee5f7248208e4&category=science&language=en');
+    let data = await response.json();
+    show(data.results,'health');
 }
 
-function showSports(data) {
-    const ul = document.getElementById('sports');
+function show(data,category) {
+    const ul = document.getElementById(category);
     const list = document.createDocumentFragment();
 
     data.map((val) => {
@@ -42,13 +42,28 @@ function showSports(data) {
 
         item.style.width = '100%';
 
-        // let titleContent = document.createElement('p');
+        let titleContent = item.appendChild(document.createElement('div'));
 
-        // titleContent.textContent = val.content;
+        titleContent.style.color = 'white';
 
-        // item.innerHTML = titleContent.textContent;
+        titleContent.style.fontWeight = '900';
+
+        titleContent.style.fontSize = '15px';
+
+        titleContent.style.overflowWrap = 'break-word';
+
+        titleContent.textContent = val.title;
+
+        item.appendChild(titleContent);
+
+        // item.style.overflow = 'hidden';
+
+        titleContent.style.overflow = 'hidden';
+
+        titleContent.style.textOverflow = 'ellipsis';
 
         listItem.appendChild(item);
+        
         list.appendChild(listItem);
     });
 
@@ -56,3 +71,7 @@ function showSports(data) {
 }
 
 fetchSportsData();
+
+fetchNewsData();
+
+fetchHealthData();
