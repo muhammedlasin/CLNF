@@ -1,9 +1,9 @@
-
-*{
+* {
     margin: 0;
     padding: 0;
 }
-header{
+
+header {
     width: 100%;
     height: 80px;
     background-color: black;
@@ -11,25 +11,59 @@ header{
     top: 0;
     z-index: 10;
 }
-.parent{
+
+.parent {
     margin: 0 auto;
-    background-color: aquamarine;
+    background-color: #fff;
     width: 80%;
     height: 200vh;
-    
 }
 
-.banner{
+.banner {
     position: relative;
     width: 100%;
     height: 40em;
     margin-top: 50px;
-    background-color: brown;
-    
+    background-color: #fff;
 }
 
-footer{
+
+.content>ul {
+    overflow: auto;
+    white-space: nowrap;
+    background-color: #fff;
+    margin: 30px 0 30px 0;
+}
+
+/* needs to be responsive */
+
+.content>ul>li {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    margin:20px;
+    padding: 20px;
+    height: 250px;
+    width: 400px;
+    /* height:250px;
+    width: auto; */
+}
+
+/* needs to be checked if this breaks on phone view */
+
+.content>ul>li>div>div {
+    /* white-space: normal; */
+    position: relative;
+    top: 200px;
+}
+
+.content>ul>li>div>div>p {
+    width:100%;
+}
+
+footer {
     width: 100%;
     background-color: #3f3f3f;
     height: 300px;
+    margin-top: 30px;
 }
