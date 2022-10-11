@@ -122,20 +122,20 @@ for (i = 0; i < coll.length; i++) {
 const defaultImageUrl = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_IonlVghwpmFgGxdJRZZIbjGI6Y2320yt7g&usqp=CAU';
 
 async function fetchSportsData() {
-    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_121401ca00771f49d680f781ee5f7248208e4&category=sports&language=en');
+    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1216262a30a16c99abf848979da06666a3393&category=sports&language=en');
     let data = await response.json();
     console.log(data.results);
     show(data.results,'sports');
 }
 
 async function fetchNewsData() {
-    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_121401ca00771f49d680f781ee5f7248208e4&category=top&language=en');
+    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1216262a30a16c99abf848979da06666a3393&category=top&language=en');
     let data = await response.json();
     show(data.results,'news');
 }
 
 async function fetchHealthData() {
-    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_121401ca00771f49d680f781ee5f7248208e4&category=science&language=en');
+    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1216262a30a16c99abf848979da06666a3393&category=science&language=en');
     let data = await response.json();
     show(data.results,'health');
 }
