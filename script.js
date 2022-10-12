@@ -124,20 +124,20 @@ const defaultImageUrl_science = 'https://static.theprint.in/wp-content/uploads/2
 const defaultImageUrl_news = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtvNKlYPKnDEOTqYIB4xU-U-NkSaePiE9FBQ&usqp=CAU';
 
 async function fetchSportsData() {
-    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1216262a30a16c99abf848979da06666a3393&category=sports&language=en');
+    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1220618b0701da7c91f3238ec74273a8d80fd&category=sports&language=en');
     let data = await response.json();
     console.log(data.results);
     show(data.results, 'sports',defaultImageUrl_sports);
 }
 
 async function fetchNewsData() {
-    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1216262a30a16c99abf848979da06666a3393&category=top&language=en');
+    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1220618b0701da7c91f3238ec74273a8d80fd&category=top&language=en');
     let data = await response.json();
     show(data.results, 'news', defaultImageUrl_news);
 }
 
 async function fetchScienceData() {
-    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1216262a30a16c99abf848979da06666a3393&category=science&language=en');
+    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1220618b0701da7c91f3238ec74273a8d80fd&category=science&language=en');
     let data = await response.json();
     show(data.results, 'science', defaultImageUrl_science);
 }
@@ -150,7 +150,7 @@ function show(data, category, defaultUrl) {
         let listItem = document.createElement('li');
         let item = document.createElement('div');
         if (val.image_url !== null) {
-            item.style.backgroundImage = `url('${val.image_url}')`;
+            item.style.backgroundImage = `url(${val.image_url})`;
         }
 
         else {
@@ -182,10 +182,19 @@ function show(data, category, defaultUrl) {
             }
 
             else {
-                image.src = defaultImageUrl;
+                image.src = defaultUrl;
             }
 
-            description.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip';
+            //description.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip';
+            
+            if(val.description === null) {
+                description.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip';
+            }
+
+            else {
+                description.textContent = val.description;
+            }
+
             modal.showModal();
         });
 
