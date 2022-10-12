@@ -122,20 +122,20 @@ for (i = 0; i < coll.length; i++) {
 const defaultImageUrl = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_IonlVghwpmFgGxdJRZZIbjGI6Y2320yt7g&usqp=CAU';
 
 async function fetchSportsData() {
-    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1216262a30a16c99abf848979da06666a3393&category=sports&language=en');
+    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1220618b0701da7c91f3238ec74273a8d80fd&category=sports&language=en');
     let data = await response.json();
     console.log(data.results);
     show(data.results, 'sports');
 }
 
 async function fetchNewsData() {
-    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1216262a30a16c99abf848979da06666a3393&category=top&language=en');
+    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1220618b0701da7c91f3238ec74273a8d80fd&category=top&language=en');
     let data = await response.json();
     show(data.results, 'news');
 }
 
 async function fetchHealthData() {
-    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1216262a30a16c99abf848979da06666a3393&category=science&language=en');
+    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1220618b0701da7c91f3238ec74273a8d80fd&category=science&language=en');
     let data = await response.json();
     show(data.results, 'health');
 }
@@ -164,8 +164,6 @@ function show(data, category) {
         item.style.width = '100%';
 
 
-        let closeButton = document.querySelector('.modal-close');
-
         item.addEventListener('click', () => {
             let modal = document.querySelector('.modal-class');
             let title = document.querySelector('.modal-title');
@@ -187,7 +185,9 @@ function show(data, category) {
             modal.showModal();
         });
 
-        closeButton.addEventListener('click', () => {
+        let closeArrow = document.querySelector('.close');
+
+        closeArrow.addEventListener('click', () => {
             let modal = document.querySelector('.modal-class');
             modal.close();
         })
