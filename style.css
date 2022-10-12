@@ -223,6 +223,7 @@ footer {
     .content>ul {
         display: grid;
         grid-template-rows: repeat(3,1fr);
+        overflow-x: hidden;
     }
     .content>ul>li {
 

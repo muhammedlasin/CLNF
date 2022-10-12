@@ -119,28 +119,30 @@ for (i = 0; i < coll.length; i++) {
     });
 }
 
-const defaultImageUrl = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_IonlVghwpmFgGxdJRZZIbjGI6Y2320yt7g&usqp=CAU';
+const defaultImageUrl_sports = 'https://media.istockphoto.com/photos/various-sport-equipments-on-grass-picture-id949190756?k=20&m=949190756&s=170667a&w=0&h=RBVLWqBNY1OrRyUX-bi-gcEPtszzZOxzmU-ori5467M=';
+const defaultImageUrl_science = 'https://static.theprint.in/wp-content/uploads/2019/11/science.jpg';
+const defaultImageUrl_news = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtvNKlYPKnDEOTqYIB4xU-U-NkSaePiE9FBQ&usqp=CAU';
 
 async function fetchSportsData() {
     let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1216262a30a16c99abf848979da06666a3393&category=sports&language=en');
     let data = await response.json();
     console.log(data.results);
-    show(data.results, 'sports');
+    show(data.results, 'sports',defaultImageUrl_sports);
 }
 
 async function fetchNewsData() {
     let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1216262a30a16c99abf848979da06666a3393&category=top&language=en');
     let data = await response.json();
-    show(data.results, 'news');
+    show(data.results, 'news', defaultImageUrl_news);
 }
 
-async function fetchHealthData() {
+async function fetchScienceData() {
     let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1216262a30a16c99abf848979da06666a3393&category=science&language=en');
     let data = await response.json();
-    show(data.results, 'health');
+    show(data.results, 'science', defaultImageUrl_science);
 }
 
-function show(data, category) {
+function show(data, category, defaultUrl) {
     const ul = document.getElementById(category);
     const list = document.createDocumentFragment();
 
@@ -152,7 +154,7 @@ function show(data, category) {
         }
 
         else {
-            item.style.backgroundImage = `url('${defaultImageUrl}')`;
+            item.style.backgroundImage = `url('${defaultUrl}')`;
         }
 
         item.style.backgroundSize = 'cover';
@@ -225,6 +227,6 @@ fetchSportsData();
 
 fetchNewsData();
 
-fetchHealthData();
+fetchScienceData();
 
 
