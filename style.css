@@ -199,11 +199,13 @@ footer {
     /* white-space: normal; */
     position: relative;
     top: 200px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    padding: 10px;
 }
 
 .content>ul>li>div>div>p {
     width: 100%;
-
 }
 
 .content-main {
