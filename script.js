@@ -9,7 +9,7 @@ async function fetchText(url) {
     showNews(data.results);
 }
 
-function showNews(data){
+function showNews(data) {
     const ul = document.getElementById('display');
     const list = document.createDocumentFragment();
 
@@ -20,10 +20,10 @@ function showNews(data){
         let content = document.createElement('div');
         content.classList.add("content");
         let title = document.createElement('h1');
-        let date= document.createElement('p')
+        let date = document.createElement('p')
         date.classList.add("content-date");
         let body = document.createElement('p');
-        image.style.backgroundImage=`url('${post.image_url}')`
+        image.style.backgroundImage = `url('${post.image_url}')`
         title.innerHTML = `${post.title}`;
         date.innerHTML = `${post.pubDate.split(" ")[0]}`
         body.innerHTML = `${post.content}`;
@@ -40,15 +40,15 @@ function showNews(data){
 }
 
 
-function showSearch(){
+function showSearch() {
     let x = document.getElementById("parent-div");
     let y = document.getElementById("box-overlay")
     if (x.style.display === "none") {
-      x.style.display = "block";
-      y.style.display="none";
+        x.style.display = "block";
+        y.style.display = "none";
     } else {
-      x.style.display = "none";
-      y.style.display = "block";
+        x.style.display = "none";
+        y.style.display = "block";
     }
 }
 
@@ -56,21 +56,21 @@ function showSearch(){
 
 
 const options = {
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': '328aa9ca11msh080b545b7552596p182b44jsne2b7cbb76248',
-		'X-RapidAPI-Host': 'current-news.p.rapidapi.com'
-	}
+    method: 'GET',
+    headers: {
+        'X-RapidAPI-Key': '328aa9ca11msh080b545b7552596p182b44jsne2b7cbb76248',
+        'X-RapidAPI-Host': 'current-news.p.rapidapi.com'
+    }
 };
 
 fetch('https://current-news.p.rapidapi.com/news', options)
     .then(
-        function(response){
+        function (response) {
 
             response.json().then(
-                function(data){
+                function (data) {
                     let x = Math.floor(Math.random() * 20);
-                    let img =data.news[x].urlToImage;
+                    let img = data.news[x].urlToImage;
                     let heading = data.news[x].title;
                     document.getElementById("main-news").style.backgroundImage = `url(${img})`;
                     document.getElementById("main-title").innerHTML = heading;
@@ -79,22 +79,22 @@ fetch('https://current-news.p.rapidapi.com/news', options)
         }
     )
     .catch(
-        function(err){
-            console.log(err+'404');
+        function (err) {
+            console.log(err + '404');
         }
-        )
+    )
 
-        
-function handleSearch(){
+
+function handleSearch() {
     const val = document.getElementById("search-news").value;
     console.log(val)
 }
 
-function searchNews(){
+function searchNews() {
     const val = document.getElementById("search-news").value;
-    const url= `https://newsdata.io/api/1/news?apikey=pub_121401ca00771f49d680f781ee5f7248208e4&q=${val}&language=en`;
-   fetchText(url);
-   
+    const url = `https://newsdata.io/api/1/news?apikey=pub_121401ca00771f49d680f781ee5f7248208e4&q=${val}&language=en`;
+    fetchText(url);
+
 
 }
 
@@ -125,29 +125,29 @@ async function fetchSportsData() {
     let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1216262a30a16c99abf848979da06666a3393&category=sports&language=en');
     let data = await response.json();
     console.log(data.results);
-    show(data.results,'sports');
+    show(data.results, 'sports');
 }
 
 async function fetchNewsData() {
     let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1216262a30a16c99abf848979da06666a3393&category=top&language=en');
     let data = await response.json();
-    show(data.results,'news');
+    show(data.results, 'news');
 }
 
 async function fetchHealthData() {
     let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1216262a30a16c99abf848979da06666a3393&category=science&language=en');
     let data = await response.json();
-    show(data.results,'health');
+    show(data.results, 'health');
 }
 
-function show(data,category) {
+function show(data, category) {
     const ul = document.getElementById(category);
     const list = document.createDocumentFragment();
 
     data.map((val) => {
         let listItem = document.createElement('li');
         let item = document.createElement('div');
-        if(val.image_url !== null) {
+        if (val.image_url !== null) {
             item.style.backgroundImage = `url('${val.image_url}')`;
         }
 
@@ -162,6 +162,36 @@ function show(data,category) {
         item.style.height = '100%';
 
         item.style.width = '100%';
+
+
+        let closeButton = document.querySelector('.modal-close');
+
+        item.addEventListener('click', () => {
+            let modal = document.querySelector('.modal-class');
+            let title = document.querySelector('.modal-title');
+            let image = document.querySelector('.modal-image');
+            let description = document.querySelector('.modal-description');
+            
+
+            title.textContent = val.title;
+
+            if (val.image_url !== null) {
+                image.src = val.image_url;
+            }
+
+            else {
+                image.src = defaultImageUrl;
+            }
+
+            description.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip';
+            modal.showModal();
+        });
+
+        closeButton.addEventListener('click', () => {
+            let modal = document.querySelector('.modal-class');
+            modal.close();
+        })
+
 
         let titleContent = item.appendChild(document.createElement('div'));
 
@@ -184,7 +214,7 @@ function show(data,category) {
         titleContent.style.textOverflow = 'ellipsis';
 
         listItem.appendChild(item);
-        
+
         list.appendChild(listItem);
     });
 
