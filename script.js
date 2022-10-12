@@ -136,7 +136,9 @@ async function fetchNewsData() {
     show(data.results, 'news', defaultImageUrl_news);
 }
 
+
 async function fetchScienceData() {
+
     let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1220618b0701da7c91f3238ec74273a8d80fd&category=science&language=en');
     let data = await response.json();
     show(data.results, 'science', defaultImageUrl_science);
@@ -165,8 +167,6 @@ function show(data, category, defaultUrl) {
 
         item.style.width = '100%';
 
-
-        let closeButton = document.querySelector('.modal-close');
 
         item.addEventListener('click', () => {
             let modal = document.querySelector('.modal-class');
@@ -198,7 +198,9 @@ function show(data, category, defaultUrl) {
             modal.showModal();
         });
 
-        closeButton.addEventListener('click', () => {
+        let closeArrow = document.querySelector('.close');
+
+        closeArrow.addEventListener('click', () => {
             let modal = document.querySelector('.modal-class');
             modal.close();
         })
