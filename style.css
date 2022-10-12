@@ -19,58 +19,62 @@ header {
     text-align: center;
     padding: 12px;
     text-decoration: none;
-    font-size: 18px; 
+    font-size: 18px;
     line-height: 25px;
     border-radius: 4px;
-  }
-  
-  .header a.logo {
+}
+
+.header a.logo {
     font-size: 25px;
     font-weight: bold;
-  }
-  
-  .header a:hover {
+}
+
+.header a:hover {
     background-color: #ddd;
     color: black;
-  }
-  
-  .header a.active {
+}
+
+.header a.active {
     background-color: dodgerblue;
     color: white;
-  }
-  
-  .header-right {
+}
+
+.header-right {
     float: right;
     margin-right: 11%;
-  }
-  .logo{
-  margin-left: 9%;
-  }
+}
 
-  .search{
+.logo {
+    margin-left: 9%;
+}
+
+.search {
     width: 30px;
     height: 30px;
     margin-top: 10px;
-  }
-  .header span:hover {
+}
+
+.header span:hover {
     background-color: #ddd;
     color: black;
-  }
-.search-div{
+}
+
+.search-div {
     height: 80px;
     width: 80%;
     background-color: white;
     margin: 0 auto;
 }
 
-.search-bar{
+.search-bar {
     width: 55%;
     height: 30px;
-    margin-top: 20px ;
+    margin-top: 20px;
     border: solid 2px;
     border-radius: 5px;
 }
-.search-btn{
+
+.search-btn {
     float: right;
     margin-top: 20px;
     height: 34px;
@@ -80,18 +84,20 @@ header {
     background-color: black;
     color: white;
 }
-.date{
+
+.date {
     width: 20%;
     height: 30px;
     float: left;
-    margin-top: 30px ;
+    margin-top: 30px;
 }
 
 .parent {
     margin: 0 auto;
     background-color: #fff;
     width: 80%;
-    height: 200vh;
+    /* height: 200vh; */
+    margin-bottom: 40px;
 
 }
 
@@ -103,10 +109,11 @@ header {
 
     background-color: brown;
 
-    background-size: cover ;
-    
+    background-size: cover;
+
 }
-.banner-content{
+
+.banner-content {
     max-width: 800px;
     height: 190px;
     margin-left: 150px;
@@ -114,32 +121,35 @@ header {
     padding-left: 15px;
     color: white;
 }
-.banner-content h1{
+
+.banner-content h1 {
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 10px;
     padding: 10px;
 }
-footer{
+
+footer {
     width: 100%;
     background-color: #3f3f3f;
     height: 300px;
 }
 
-#box-overlay{
+#box-overlay {
     display: none;
-    
+
 }
 
-.display-news{
+.display-news {
     width: 80%;
     margin: 0 auto;
 
 }
-.display-news li{
+
+.display-news li {
     list-style: none;
 }
- 
-.image{
+
+.image {
     width: 35%;
     height: 250px;
     background-color: yellow;
@@ -148,7 +158,7 @@ footer{
     background-size: cover;
 }
 
-.content{
+.header-content {
     width: 60%;
     height: 250px;
     background-color: white;
@@ -156,12 +166,14 @@ footer{
     margin-top: 30px;
     overflow: hidden;
 }
-.content p{
+
+/* .content p {
     margin-top: 5px;
-}
-.content-date{
+} */
+
+/* .content-date {
     font-size: 20px;
-}
+} */
 
 .content>ul {
     overflow: auto;
@@ -170,13 +182,11 @@ footer{
     margin: 30px 0 30px 0;
 }
 
-/* needs to be responsive */
-
 .content>ul>li {
     display: inline-block;
     text-align: center;
     text-decoration: none;
-    margin:20px;
+    margin: 20px;
     padding: 20px;
     height: 250px;
     width: 400px;
@@ -184,7 +194,6 @@ footer{
     width: auto; */
 }
 
-/* needs to be checked if this breaks on phone view */
 
 .content>ul>li>div>div {
     /* white-space: normal; */
@@ -193,8 +202,30 @@ footer{
 }
 
 .content>ul>li>div>div>p {
-    width:100%;
+    width: 100%;
 
+}
+
+.content-main {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.modal-class::backdrop {
+    background: rgb(0 0 0 / 0.4);
+    filter: blur(20px);
+}
+
+@media only screen and (max-width: 600px) {
+    .content>ul {
+        display: grid;
+        grid-template-rows: repeat(3,1fr);
+        overflow-x: hidden;
+    }
+    .content>ul>li {
+        height: 300px;
+        width: 300px;
+    }
 }
 
 footer {
@@ -205,7 +236,8 @@ footer {
 }
 
 body {
-    margin: 0%;
+    margin: 0;
+    overflow-x: hidden;
 }
 
 .collapsible {
@@ -239,8 +271,8 @@ body {
     background-color: #555;
 }
 
-.content {
-    padding: 0 18px;
+.footer-content {
+    padding: 20px;
     display: none;
     overflow: hidden;
     background-color: #f1f1f1;
@@ -259,6 +291,8 @@ body {
     list-style: none;
     padding-top: 10px;
     padding-bottom: 10px;
+    padding-left: 0px;
+    margin: 0px;
 }
 
 .copyright {
@@ -310,6 +344,10 @@ ul {
 @media only screen and (max-width: 600px) {
     .normal {
         display: none;
+    }
+
+    footer {
+        height: 150px;
     }
 }
 
