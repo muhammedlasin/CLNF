@@ -219,7 +219,19 @@ footer {
     filter: blur(20px);
 }
 
-@media only screen and (max-width: 600px) {}
+@media only screen and (max-width: 600px) {
+    .content>ul {
+        display: grid;
+        grid-template-rows: repeat(3,1fr);
+    }
+    .content>ul>li {
+
+    }
+
+    .content>ul>li>div {
+
+    }
+}
 
 footer {
     width: 100%;
