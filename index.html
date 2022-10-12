@@ -6,16 +6,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="style.css" />
+
     <title>CLNF</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
 
     <header class="header">
+
         <a href="#default" class="logo">CLNF</a>
         <div class="header-right">
+
             <span><img onclick="showHamburger()" class="hamburger-menu"
                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK9kIESf1xh1G8r01ZPNKsjb5zrvhWUYHjlD0ji8aLeASb-XLlLqhT8Xs28NFbC4BeFaA&usqp=CAU" /></span>
+
             <a class="active" href="#home">Home</a>
             <a href="#contact">News</a>
             <a href="#about">Sport</a>
@@ -24,10 +29,12 @@
             <span><img onclick="showSearch()" class="search"
                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4frpd-PZM6TUHnoSY-_DgGrqErkwph3F0cEPz92hBMwtjNLn49mPownYUmhTHRjgV2C0&usqp=CAU" /></span>
         </div>
+
     </header>
 
 
     <div class="box">
+
         <div class="hamburger-items" id="ham-items">
             <hr />
             <a class="active" href="#home">Home</a>
@@ -64,25 +71,110 @@
             </button>
         </nav>
 
+
     </div>
 
     <div class="parent" id="parent-div">
         <div class="banner" id="main-news">
             <div class="banner-content">
                 <h1 id="main-title"></h1>
+
             </div>
         </div>
+        
         <div class="content-main">
-            <div class="content1">
+            <div class="content" id="content1">
+                <h1>Sports</h1>
+                <ul id="sports"></ul>
             </div>
-            <div class="content1">
+            <div class="content" id="content1">
+                <h1>Top news</h1>
+                <ul id="news"></ul>
             </div>
-            <div class="content1">
+            <div class="content" id="content1">
+                <h1>Science</h1>
+                <ul id="science"></ul>
+
             </div>
             <div class="weather">
             </div>
         </div>
+
+        <dialog class="modal-class">
+            <a class="close" href="#">&times;</a>
+            <img src="" alt="" class="modal-image">
+            <h2 class="modal-title"></h2>
+            <p class="modal-description"></p>
+        </dialog>
     </div>
+
+
+
+    <footer>
+        <div class="responsive">
+            <button type="button" class="collapsible">COMPANY</button>
+            <div class="footer-content">
+                <ul class="title">
+                    <li><a class="a" href="https://www.terrificminds.com/">About Us</a></li>
+                    <li><a class="a" href="https://www.terrificminds.com/">Careers</a></li>
+                    <li><a class="a" href="https://www.google.com/">Help</a></li>
+                </ul>
+            </div>
+            <button type="button" class="collapsible">SOCIAL MEDIA</button>
+            <div class="footer-content">
+                <ul class="title">
+                    <li><a class="a" href="https://www.facebook.com/"><i class="fa fa-facebook-f"></i></a></li>
+                    <li><a class="a" href="https://twitter.com/i/flow/login"><i class="fa fa-twitter"></i></a></li>
+                    <li><a class="a" href="https://www.instagram.com/"><i class="fa fa-instagram"></i></a></li>
+                </ul>
+            </div>
+            <button type="button" class="collapsible">CONTACT</button>
+            <div class="footer-content">
+                <ul class="title">
+                    <li><a class="a" href="#">clnf@gmail.com</a></li>
+                    <li><a class="a" href="#">+91 789893453</a></li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="normal">
+            <div class="contents">
+                <ul class="list1">
+                    <li>
+                        <p class="list">COMPANY</p>
+                        <ul class="list2">
+                            <li><a href="https://www.terrificminds.com/">About Us</a></li>
+                            <li><a href="https://www.terrificminds.com/">Careers</a></li>
+                            <li><a href="https://www.google.com/">Help</a></li>
+                        </ul>
+
+                    </li>
+                    <li>
+                        <p class="list">SOCIAL MEDIA</p>
+                        <ul class="list3">
+                            <li><a href="https://www.facebook.com/"><i class="fa fa-facebook-f"></i></a></li>
+                            <li><a href="https://twitter.com/i/flow/login"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="https://www.instagram.com/"><i class="fa fa-instagram"></i></a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p class="list">CONTACT</p>
+                        <ul class="list2">
+                            <li><a href="#">clnf@gmail.com</a></li>
+                            <li><a href="#">+91 789893453</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="copyright">
+                <ul class="list">
+                    <li>Copyright&copy;2022 CLNF </li>
+                </ul>
+            </div>
+
+        </div>
+    </footer>
+
 
     <script src="script.js"></script>
 </body>

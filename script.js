@@ -1,3 +1,4 @@
+
 // Fetch news for the banner from rapid API.
 const options = {
     method: 'GET',
@@ -6,6 +7,7 @@ const options = {
         'X-RapidAPI-Host': 'current-news.p.rapidapi.com'
     }
 };
+
 
 fetch('https://current-news.p.rapidapi.com/news', options)
     .then(
@@ -64,6 +66,7 @@ async function fetchText(url) {
 
 
 
+
 // Display searched news.
 function showNews(data) {
 
@@ -88,6 +91,7 @@ function showNews(data) {
 
     const list = document.createDocumentFragment();
     data.map(function (post) {
+
 
         if (post.content !== null) {
             let li = document.createElement('li');
@@ -114,7 +118,7 @@ function showNews(data) {
             li.appendChild(image);
 
             let content = document.createElement('div');
-            content.classList.add("content");
+            content.classList.add("search-content");
             li.appendChild(content);
 
             let title = document.createElement('h1');
@@ -131,6 +135,7 @@ function showNews(data) {
             content.appendChild(body);
 
         }
+
     });
 
     ul.appendChild(list);
@@ -138,7 +143,7 @@ function showNews(data) {
     pagination(ul);
 
 
-}
+
 
 
 
@@ -237,7 +242,6 @@ function autocomplete(inp, arr) {
     });
 }
 
-
 var keywords = ["Business", "Entertainment", "Environment", "Food", "Health", "Politics", "Science", "Sports", "Technology", "Top", "World", "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua & Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia & Herzegovina", "Botswana", "Brazil", "British Virgin Islands", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central Arfrican Republic", "Chad", "Chile", "China", "Colombia", "Congo", "Cook Islands", "Costa Rica", "Cote D Ivoire", "Croatia", "Cuba", "Curacao", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands", "Faroe Islands", "Fiji", "Finland", "France", "French Polynesia", "French West Indies", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauro", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "Norway", "Oman", "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russia", "Rwanda", "Saint Pierre & Miquelon", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "St Kitts & Nevis", "St Lucia", "St Vincent", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor L'Este", "Togo", "Tonga", "Trinidad & Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks & Caicos", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States of America", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen", "Zambia", "Zimbabwe"];
 
 
@@ -265,6 +269,7 @@ function showHamburger() {
         menu.style.display = "none";
     }
 }
+
 
 
 //Pagination
@@ -371,3 +376,142 @@ function pagination(ul) {
 
 
 }
+
+
+var coll = document.getElementsByClassName("collapsible");
+
+for (let i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+            content.style.display = "none";
+        } else {
+            content.style.display = "block";
+        }
+    });
+}
+
+const defaultImageUrl_sports = 'https://media.istockphoto.com/photos/various-sport-equipments-on-grass-picture-id949190756?k=20&m=949190756&s=170667a&w=0&h=RBVLWqBNY1OrRyUX-bi-gcEPtszzZOxzmU-ori5467M=';
+const defaultImageUrl_science = 'https://static.theprint.in/wp-content/uploads/2019/11/science.jpg';
+const defaultImageUrl_news = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtvNKlYPKnDEOTqYIB4xU-U-NkSaePiE9FBQ&usqp=CAU';
+
+async function fetchSportsData() {
+    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1220618b0701da7c91f3238ec74273a8d80fd&category=sports&language=en');
+    let data = await response.json();
+    console.log(data.results);
+    show(data.results, 'sports',defaultImageUrl_sports);
+}
+
+async function fetchNewsData() {
+    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1220618b0701da7c91f3238ec74273a8d80fd&category=top&language=en');
+    let data = await response.json();
+    show(data.results, 'news', defaultImageUrl_news);
+}
+
+
+async function fetchScienceData() {
+
+    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1220618b0701da7c91f3238ec74273a8d80fd&category=science&language=en');
+    let data = await response.json();
+    show(data.results, 'science', defaultImageUrl_science);
+}
+
+function show(data, category, defaultUrl) {
+    const ul = document.getElementById(category);
+    const list = document.createDocumentFragment();
+
+    data.map((val) => {
+        let listItem = document.createElement('li');
+        let item = document.createElement('div');
+        if (val.image_url !== null) {
+            item.style.backgroundImage = `url(${val.image_url})`;
+        }
+
+        else {
+            item.style.backgroundImage = `url('${defaultUrl}')`;
+        }
+
+        item.style.backgroundSize = 'cover';
+
+        item.style.backgroundRepeat = 'no-repeat';
+
+        item.style.height = '100%';
+
+        item.style.width = '100%';
+
+
+        item.addEventListener('click', () => {
+            let modal = document.querySelector('.modal-class');
+            let title = document.querySelector('.modal-title');
+            let image = document.querySelector('.modal-image');
+            let description = document.querySelector('.modal-description');
+            
+
+            title.textContent = val.title;
+
+            if (val.image_url !== null) {
+                image.src = val.image_url;
+            }
+
+            else {
+                image.src = defaultUrl;
+            }
+
+            //description.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip';
+            
+            if(val.description === null) {
+                description.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip';
+            }
+
+            else {
+                description.textContent = val.description;
+            }
+
+            modal.showModal();
+        });
+
+        let closeArrow = document.querySelector('.close');
+
+        closeArrow.addEventListener('click', () => {
+            let modal = document.querySelector('.modal-class');
+            modal.close();
+        })
+
+
+        let titleContent = item.appendChild(document.createElement('div'));
+
+        titleContent.style.color = 'white';
+
+        titleContent.style.fontWeight = '900';
+
+        titleContent.style.fontSize = '15px';
+
+        titleContent.style.overflowWrap = 'break-word';
+
+        titleContent.textContent = val.title;
+
+        item.appendChild(titleContent);
+
+        // item.style.overflow = 'hidden';
+
+        titleContent.style.overflow = 'hidden';
+
+        titleContent.style.textOverflow = 'ellipsis';
+
+        listItem.appendChild(item);
+
+        list.appendChild(listItem);
+    });
+
+    ul.appendChild(list);
+}
+
+fetchSportsData();
+
+fetchNewsData();
+
+fetchScienceData();
+
+
+
