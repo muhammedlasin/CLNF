@@ -43,28 +43,48 @@
             <button class="search-btn" onclick="searchNews()">Search</button>
         </div>
         <div class="display-news" id="display">
+            <h1 id="no-result">Sorry there are no search results</h1>
+            <ul id="display-ul">
 
+            </ul>
         </div>
 
-        <div class="parent" id="parent-div">
-            <div class="banner" id="main-news">
-                <div class="banner-content">
-                    <h1 id="main-title"></h1>
-                </div>
+
+        <nav class="pagination-container">
+            <button class="pagination-button" id="prev-button" aria-label="Previous page" title="Previous page">
+                &lt;
+            </button>
+
+            <div id="pagination-numbers">
+
             </div>
-            <div class="content-main">
-                <div class="content1">
-                </div>
-                <div class="content1">
-                </div>
-                <div class="content1">
-                </div>
-                <div class="weather">
-                </div>
+
+            <button class="pagination-button" id="next-button" aria-label="Next page" title="Next page">
+                &gt;
+            </button>
+        </nav>
+
+    </div>
+
+    <div class="parent" id="parent-div">
+        <div class="banner" id="main-news">
+            <div class="banner-content">
+                <h1 id="main-title"></h1>
             </div>
         </div>
+        <div class="content-main">
+            <div class="content1">
+            </div>
+            <div class="content1">
+            </div>
+            <div class="content1">
+            </div>
+            <div class="weather">
+            </div>
+        </div>
+    </div>
 
-        <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
