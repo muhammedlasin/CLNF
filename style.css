@@ -34,19 +34,18 @@ header {
     color: black;
 }
 
-.header a.active {
-    background-color: dodgerblue;
-    color: white;
-}
+
 
 .header-right {
     float: right;
     margin-right: 11%;
 }
 
+
 .logo {
     margin-left: 9%;
 }
+
 
 .search {
     width: 30px;
@@ -54,9 +53,9 @@ header {
     margin-top: 10px;
 }
 
-.header span:hover {
-    background-color: #ddd;
-    color: black;
+
+.hamburger-menu {
+    display: none;
 }
 
 .search-div {
@@ -66,51 +65,36 @@ header {
     margin: 0 auto;
 }
 
-.search-bar {
-    width: 55%;
-    height: 30px;
-    margin-top: 20px;
-    border: solid 2px;
-    border-radius: 5px;
-}
+
+
 
 .search-btn {
     float: right;
-    margin-top: 20px;
-    height: 34px;
-    width: 3.5%;
+    margin-top: 30px;
+    height: 40px;
+    width: 7%;
     border: solid 2px;
     border-radius: 5px;
     background-color: black;
     color: white;
 }
 
-.date {
-    width: 20%;
-    height: 30px;
-    float: left;
-    margin-top: 30px;
-}
 
 .parent {
     margin: 0 auto;
     background-color: #fff;
     width: 80%;
-    /* height: 200vh; */
     margin-bottom: 40px;
+
 
 }
 
 .banner {
     position: relative;
     width: 100%;
-    height: 40em;
+    height: 700px;
     margin-top: 50px;
-
-    background-color: brown;
-
     background-size: cover;
-
 }
 
 .banner-content {
@@ -124,7 +108,6 @@ header {
 
 .banner-content h1 {
     background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
     padding: 10px;
 }
 
@@ -158,7 +141,9 @@ footer {
     background-size: cover;
 }
 
-.header-content {
+
+.search-content {
+
     width: 60%;
     height: 250px;
     background-color: white;
@@ -167,13 +152,17 @@ footer {
     overflow: hidden;
 }
 
-/* .content p {
-    margin-top: 5px;
-} */
 
-/* .content-date {
+.search-content p {
+    margin-top: 5px;
+}
+
+
+
+ .content-date {
+
     font-size: 20px;
-} */
+} 
 
 .content>ul {
     overflow: auto;
@@ -207,6 +196,223 @@ footer {
 .content>ul>li>div>div>p {
     width: 100%;
 }
+
+
+
+
+/* Autocomplete */
+
+.autocomplete {
+    position: relative;
+    display: inline-block;
+    width: 90%;
+    height: 30px;
+    margin-top: 30px;
+
+
+}
+
+input {
+    border: 1px solid transparent;
+    background-color: #f1f1f1;
+    padding: 10px;
+    font-size: 16px;
+}
+
+input[type=text] {
+    background-color: #f1f1f1;
+    width: 100%;
+}
+
+
+.autocomplete-items {
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+    /*position the autocomplete items to be the same width as the container:*/
+    top: 100%;
+    left: 0;
+    right: 0;
+}
+
+.autocomplete-items div {
+    padding: 10px;
+    width: 100.2%;
+    cursor: pointer;
+    background-color: #fff;
+    border-bottom: 1px solid #d4d4d4;
+    border-right: 1px solid #d4d4d4;
+}
+
+/*when hovering an item:*/
+.autocomplete-items div:hover {
+    background-color: #e9e9e9;
+}
+
+/*when navigating through the items using the arrow keys:*/
+.autocomplete-active {
+    background-color: DodgerBlue !important;
+    color: #ffffff;
+}
+
+.hamburger-items {
+    display: none;
+}
+
+
+
+@media only screen and (max-width: 600px) {
+    .header-right a {
+        display: none;
+    }
+
+    .hamburger-menu {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        margin-top: 10px;
+        margin-right: 5px;
+    }
+
+    .hamburger-items {
+        display: none;
+        width: 102%;
+        height: 150px;
+        background-color: black;
+    }
+
+    .hamburger-items a {
+        float: left;
+        color: white;
+        text-align: center;
+        padding: 30px;
+        text-decoration: none;
+        font-size: 18px;
+        line-height: 25px;
+        border-radius: 4px;
+        border-left: 5px;
+    }
+
+    .hamburger-items hr {
+        background-color: white;
+        width: 100%;
+        height: 1px;
+    }
+
+
+
+    .autocomplete {
+        position: relative;
+        display: inline-block;
+        width: 80%;
+        height: 30px;
+        margin-top: 30px;
+    }
+
+    .search-btn {
+        float: right;
+        margin-top: 30px;
+        height: 40px;
+        width: 14%;
+        border: solid 2px;
+        border-radius: 5px;
+        background-color: black;
+        color: white;
+    }
+
+    .image {
+        width: 100%;
+        height: 250px;
+        background-color: yellow;
+        margin-top: 30px;
+        background-size: cover;
+    }
+
+    .search-content {
+        width: 100%;
+        height: 250px;
+        background-color: white;
+        margin-top: 30px;
+        overflow: hidden;
+    }
+
+    .search-content p {
+        margin-top: 5px;
+    }
+
+    .content-date {
+        font-size: 20px;
+    }
+
+    .banner {
+        position: relative;
+        width: 100%;
+        height: 266px;
+        margin-top: 50px;
+        background-color: brown;
+        background-size: cover;
+
+    }
+
+    .banner-content {
+        max-width: 800px;
+        height: 190px;
+        margin-left: -8px;
+        padding-top: 266px;
+        padding-left: 8px;
+        color: white;
+    }
+
+    .banner-content h1 {
+        background-color: rgba(0, 0, 0, 1);
+        padding: 10px;
+    }
+}
+
+
+/* Pagination */
+
+
+.hidden {
+    display: none;
+}
+
+.pagination-container {
+    width: calc(100% - 2rem);
+    display: flex;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    padding: 1rem 0;
+    justify-content: center;
+}
+
+.pagination-number,
+.pagination-button {
+    font-size: 1.1rem;
+    background-color: transparent;
+    border: none;
+    margin: 0.25rem 0.25rem;
+    cursor: pointer;
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: .2rem;
+}
+
+.pagination-number:hover,
+.pagination-button:not(.disabled):hover {
+    background: #fff;
+}
+
+.pagination-number.active {
+    color: #fff;
+    background: #0085b6;
+}
+
+#no-result {
+    display: none;
 
 .content-main {
     margin-top: 30px;
@@ -542,5 +748,6 @@ ul {
         right: 10px;
         left: 0;
     }
+
 
 }
