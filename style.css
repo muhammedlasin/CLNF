@@ -182,8 +182,6 @@ footer {
     margin: 30px 0 30px 0;
 }
 
-/* needs to be responsive */
-
 .content>ul>li {
     display: inline-block;
     text-align: center;
@@ -196,7 +194,6 @@ footer {
     width: auto; */
 }
 
-/* needs to be checked if this breaks on phone view */
 
 .content>ul>li>div>div {
     /* white-space: normal; */
@@ -219,7 +216,17 @@ footer {
     filter: blur(20px);
 }
 
-@media only screen and (max-width: 600px) {}
+@media only screen and (max-width: 600px) {
+    .content>ul {
+        display: grid;
+        grid-template-rows: repeat(3,1fr);
+        overflow-x: hidden;
+    }
+    .content>ul>li {
+        height: 300px;
+        width: 300px;
+    }
+}
 
 /* .modal-class{
     height:700px;
