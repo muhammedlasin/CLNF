@@ -3,7 +3,7 @@
 const options = {
     method: 'GET',
     headers: {
-        'X-RapidAPI-Key': '328aa9ca11msh080b545b7552596p182b44jsne2b7cbb76248',
+        'X-RapidAPI-Key': '6d053bb8e4mshcfe8dda8e785388p1bf52ajsn78d181cfacb2',
         'X-RapidAPI-Host': 'current-news.p.rapidapi.com'
     }
 };
@@ -12,7 +12,7 @@ const options = {
 fetch('https://current-news.p.rapidapi.com/news', options)
     .then(
         function (response) {
-
+            console.log(response);
             response.json().then(
                 function (data) {
                     let x = Math.floor(Math.random() * 20);
@@ -36,15 +36,25 @@ function showSearch() {
     let parent = document.getElementById("parent-div");
     let box = document.getElementById("box-overlay");
     let searchResults = document.getElementById("display")
+    let arrow = document.getElementById("n");
+
     if (parent.style.display === "none") {
         parent.style.display = "block";
         box.style.display = "none";
-        searchResults.style.display = "none"
+        searchResults.style.display = "none";
+        arrow.style.display = "none";
     }
     else {
+        let lis = document.querySelectorAll('#display-ul li');
         parent.style.display = "none";
         box.style.display = "block";
         searchResults.style.display = "block";
+        if (lis.length != 0) {
+            arrow.style.display = "flex";
+        }
+        else {
+            arrow.style.display = "none";
+        }
     }
 }
 
@@ -61,7 +71,15 @@ async function fetchText(url) {
     let response = await fetch(url);
     let data = await response.json();
     console.log(data.results);
+    let arrow = document.getElementById("arrow");
+    if (data.results != 0) {
+        arrow.style.display = "flex";
+    }
+    else {
+        arrow.style.display = "none";
+    }
     showNews(data.results);
+
 }
 
 
@@ -71,10 +89,21 @@ async function fetchText(url) {
 function showNews(data) {
 
     var lis = document.querySelectorAll('#display-ul li');
+
     if (lis.length != 0) {
         console.log(lis.length);
-        for (var i = 0; li = lis[i]; i++) {
+        for (let i = 0; li = lis[i]; i++) {
             li.parentNode.removeChild(li);
+        }
+    }
+
+
+
+    var buttonList = document.querySelectorAll("#pagination-numbers button");
+
+    if (buttonList.length != 0) {
+        for (let i = 0; button = buttonList[i]; i++) {
+            button.parentNode.removeChild(button);
         }
     }
 
@@ -140,7 +169,115 @@ function showNews(data) {
 
     ul.appendChild(list);
 
-    pagination(ul);
+
+
+
+
+    // pagination
+
+
+    const paginationNumbers = document.getElementById("pagination-numbers");
+    const paginatedList = document.getElementById("display-ul");
+    const listItems = paginatedList.querySelectorAll("li");
+    const nextButton = document.getElementById("next-button");
+    const prevButton = document.getElementById("prev-button");
+
+    const paginationLimit = 5;
+    const pageCount = Math.ceil(listItems.length / paginationLimit);
+    let currentPage = 1;
+
+    const disableButton = (button) => {
+        button.classList.add("disabled");
+        button.setAttribute("disabled", true);
+    };
+
+    const enableButton = (button) => {
+        button.classList.remove("disabled");
+        button.removeAttribute("disabled");
+    };
+
+    const handlePageButtonsStatus = () => {
+        if (currentPage === 1) {
+            disableButton(prevButton);
+        } else {
+            enableButton(prevButton);
+        }
+
+        if (pageCount === currentPage) {
+            disableButton(nextButton);
+        } else {
+            enableButton(nextButton);
+        }
+    };
+
+    const handleActivePageNumber = () => {
+        document.querySelectorAll(".pagination-number").forEach((button) => {
+            button.classList.remove("active");
+            const pageIndex = Number(button.getAttribute("page-index"));
+            if (pageIndex == currentPage) {
+                button.classList.add("active");
+            }
+        });
+    };
+
+    const appendPageNumber = (index) => {
+        const pageNumber = document.createElement("button");
+        pageNumber.className = "pagination-number";
+        pageNumber.innerHTML = index;
+        pageNumber.setAttribute("page-index", index);
+        pageNumber.setAttribute("aria-label", "Page " + index);
+
+        paginationNumbers.appendChild(pageNumber);
+    };
+
+    const getPaginationNumbers = () => {
+        for (let i = 1; i <= pageCount; i++) {
+            appendPageNumber(i);
+        }
+    };
+
+    const setCurrentPage = (pageNum) => {
+        currentPage = pageNum;
+
+        handleActivePageNumber();
+        handlePageButtonsStatus();
+
+        const prevRange = (pageNum - 1) * paginationLimit;
+        const currRange = pageNum * paginationLimit;
+
+        listItems.forEach((item, index) => {
+            item.classList.add("hidden");
+            if (index >= prevRange && index < currRange) {
+                item.classList.remove("hidden");
+            }
+        });
+    };
+
+
+    getPaginationNumbers();
+    setCurrentPage(1);
+
+    prevButton.addEventListener("click", () => {
+        setCurrentPage(currentPage - 1);
+    });
+
+    nextButton.addEventListener("click", () => {
+        setCurrentPage(currentPage + 1);
+    });
+
+    document.querySelectorAll(".pagination-number").forEach((button) => {
+        const pageIndex = Number(button.getAttribute("page-index"));
+
+        if (pageIndex) {
+            button.addEventListener("click", () => {
+                setCurrentPage(pageIndex);
+            });
+        }
+    });
+
+
+
+}
 
 
 
@@ -272,112 +409,6 @@ function showHamburger() {
 
 
 
-//Pagination
-
-function pagination(ul) {
-
-    const paginationNumbers = document.getElementById("pagination-numbers");
-    const paginatedList = ul;
-    const listItems = paginatedList.querySelectorAll("li");
-
-    const paginationLimit = 3;
-    const pageCount = Math.ceil(listItems.length / paginationLimit);
-    let currentPage = 1;
-
-    const disableButton = (button) => {
-        button.classList.add("disabled");
-        button.setAttribute("disabled", true);
-    };
-
-    const enableButton = (button) => {
-        button.classList.remove("disabled");
-        button.removeAttribute("disabled");
-    };
-
-    const handlePageButtonsStatus = () => {
-        if (currentPage === 1) {
-            disableButton(prevButton);
-        } else {
-            enableButton(prevButton);
-        }
-
-        if (pageCount === currentPage) {
-            disableButton(nextButton);
-        } else {
-            enableButton(nextButton);
-        }
-    };
-
-    const handleActivePageNumber = () => {
-        document.querySelectorAll(".pagination-number").forEach((button) => {
-            button.classList.remove("active");
-            const pageIndex = Number(button.getAttribute("page-index"));
-            if (pageIndex == currentPage) {
-                button.classList.add("active");
-            }
-        });
-    };
-
-    const appendPageNumber = (index) => {
-        const pageNumber = document.createElement("button");
-        pageNumber.className = "pagination-number";
-        pageNumber.innerHTML = index;
-        pageNumber.setAttribute("page-index", index);
-        pageNumber.setAttribute("aria-label", "Page " + index);
-
-        paginationNumbers.appendChild(pageNumber);
-    };
-
-    const getPaginationNumbers = () => {
-        for (let i = 1; i <= pageCount; i++) {
-            appendPageNumber(i);
-        }
-    };
-
-    const setCurrentPage = (pageNum) => {
-        currentPage = pageNum;
-
-        listItems.forEach((item, index) => {
-            console.log(item);
-            item.classList.add("hidden");
-            if (index >= prevRange && index < currRange) {
-                item.classList.remove("hidden");
-            }
-        });
-        handleActivePageNumber();
-        handlePageButtonsStatus();
-
-        const prevRange = (pageNum - 1) * paginationLimit;
-        const currRange = pageNum * paginationLimit;
-
-
-    };
-
-    getPaginationNumbers();
-    setCurrentPage(1);
-
-    prevButton.addEventListener("click", () => {
-        setCurrentPage(currentPage - 1);
-    });
-
-    nextButton.addEventListener("click", () => {
-        setCurrentPage(currentPage + 1);
-    });
-
-    document.querySelectorAll(".pagination-number").forEach((button) => {
-        const pageIndex = Number(button.getAttribute("page-index"));
-
-        if (pageIndex) {
-            button.addEventListener("click", () => {
-                setCurrentPage(pageIndex);
-            });
-        }
-    });
-
-
-}
-
-
 var coll = document.getElementsByClassName("collapsible");
 
 for (let i = 0; i < coll.length; i++) {
@@ -397,10 +428,10 @@ const defaultImageUrl_science = 'https://static.theprint.in/wp-content/uploads/2
 const defaultImageUrl_news = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtvNKlYPKnDEOTqYIB4xU-U-NkSaePiE9FBQ&usqp=CAU';
 
 async function fetchSportsData() {
-    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1220618b0701da7c91f3238ec74273a8d80fd&category=sports&language=en');
+    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1202395f2c989ad8a2cbe9a0c4aae6ea6fcdf&category=sports&language=en');
     let data = await response.json();
     console.log(data.results);
-    show(data.results, 'sports',defaultImageUrl_sports);
+    show(data.results, 'sports', defaultImageUrl_sports);
 }
 
 async function fetchNewsData() {
@@ -439,14 +470,14 @@ function show(data, category, defaultUrl) {
         item.style.height = '100%';
 
         item.style.width = '100%';
-
+        https://rapidapi.com/segjsierra-tYlPlZHk_bd/api/current-news/
 
         item.addEventListener('click', () => {
             let modal = document.querySelector('.modal-class');
             let title = document.querySelector('.modal-title');
             let image = document.querySelector('.modal-image');
             let description = document.querySelector('.modal-description');
-            
+
 
             title.textContent = val.title;
 
@@ -459,8 +490,8 @@ function show(data, category, defaultUrl) {
             }
 
             //description.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip';
-            
-            if(val.description === null) {
+
+            if (val.description === null) {
                 description.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip';
             }
 
