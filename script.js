@@ -35,26 +35,32 @@ fetch('https://current-news.p.rapidapi.com/news', options)
 function showSearch() {
     let parent = document.getElementById("parent-div");
     let box = document.getElementById("box-overlay");
+
     let searchResults = document.getElementById("display")
-    let arrow = document.getElementById("n");
+    let arrow = document.getElementById("arrow");
+
 
     if (parent.style.display === "none") {
         parent.style.display = "block";
         box.style.display = "none";
         searchResults.style.display = "none";
+
         arrow.style.display = "none";
+
     }
     else {
         let lis = document.querySelectorAll('#display-ul li');
         parent.style.display = "none";
         box.style.display = "block";
         searchResults.style.display = "block";
+
         if (lis.length != 0) {
             arrow.style.display = "flex";
         }
         else {
             arrow.style.display = "none";
         }
+
     }
 }
 
@@ -164,10 +170,11 @@ function showNews(data) {
             content.appendChild(body);
 
         }
-
+        
     });
 
     ul.appendChild(list);
+
 
 
 
@@ -280,269 +287,284 @@ function showNews(data) {
 }
 
 
-
-
-
-
-
-
-// Auto Complete
-
-function autocomplete(inp, arr) {
-
-    var currentFocus;
-
-    inp.addEventListener("input", function (e) {
-        var a, b, i, val = this.value;
-
-        closeAllLists();
-        if (!val) { return false; }
-        currentFocus = -1;
-
-        a = document.createElement("DIV");
-        a.setAttribute("id", this.id + "autocomplete-list");
-        a.setAttribute("class", "autocomplete-items");
-
-        this.parentNode.appendChild(a);
-
-        for (i = 0; i < arr.length; i++) {
-
-            if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-
-                b = document.createElement("DIV");
-
-                b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-                b.innerHTML += arr[i].substr(val.length);
-
-                b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-
-                b.addEventListener("click", function (e) {
-
-                    inp.value = this.getElementsByTagName("input")[0].value;
-
-                    closeAllLists();
-                });
-                a.appendChild(b);
-            }
-        }
-    });
-
-    inp.addEventListener("keydown", function (e) {
-        var x = document.getElementById(this.id + "autocomplete-list");
-        if (x) x = x.getElementsByTagName("div");
-        if (e.keyCode == 40) {
-
-            currentFocus++;
-
-            addActive(x);
-        } else if (e.keyCode == 38) {
-            currentFocus--;
-
-            addActive(x);
-        } else if (e.keyCode == 13) {
-
-            e.preventDefault();
-            if (currentFocus > -1) {
-
-                if (x) x[currentFocus].click();
-            }
-        }
-    });
-    function addActive(x) {
-
-        if (!x) return false;
-
-        removeActive(x);
-        if (currentFocus >= x.length) currentFocus = 0;
-        if (currentFocus < 0) currentFocus = (x.length - 1);
-
-        x[currentFocus].classList.add("autocomplete-active");
-    }
-    function removeActive(x) {
-
-        for (var i = 0; i < x.length; i++) {
-            x[i].classList.remove("autocomplete-active");
-        }
-    }
-    function closeAllLists(elmnt) {
-
-        var x = document.getElementsByClassName("autocomplete-items");
-        for (var i = 0; i < x.length; i++) {
-            if (elmnt != x[i] && elmnt != inp) {
-                x[i].parentNode.removeChild(x[i]);
-            }
-        }
-    }
-
-    document.addEventListener("click", function (e) {
-        closeAllLists(e.target);
-    });
 }
+    // Auto Complete
 
-var keywords = ["Business", "Entertainment", "Environment", "Food", "Health", "Politics", "Science", "Sports", "Technology", "Top", "World", "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua & Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia & Herzegovina", "Botswana", "Brazil", "British Virgin Islands", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central Arfrican Republic", "Chad", "Chile", "China", "Colombia", "Congo", "Cook Islands", "Costa Rica", "Cote D Ivoire", "Croatia", "Cuba", "Curacao", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands", "Faroe Islands", "Fiji", "Finland", "France", "French Polynesia", "French West Indies", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauro", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "Norway", "Oman", "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russia", "Rwanda", "Saint Pierre & Miquelon", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "St Kitts & Nevis", "St Lucia", "St Vincent", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor L'Este", "Togo", "Tonga", "Trinidad & Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks & Caicos", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States of America", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen", "Zambia", "Zimbabwe"];
+    function autocomplete(inp, arr) {
 
+        var currentFocus;
 
-autocomplete(document.getElementById("search-news"), keywords);
+        inp.addEventListener("input", function (e) {
+            var a, b, i, val = this.value;
 
+            closeAllLists();
+            if (!val) { return false; }
+            currentFocus = -1;
 
-
-
-//Hamburger
-
-window.addEventListener("resize", function () {
-    if (window.screen.availWidth >= 600) {
-        let menu = document.getElementById("ham-items");
-        menu.style.display = "none";
-    }
-})
-
-function showHamburger() {
-
-    let menu = document.getElementById("ham-items");
-    if (menu.style.display === "none") {
-        menu.style.display = "block";
-    }
-    else {
-        menu.style.display = "none";
-    }
-}
+            a = document.createElement("DIV");
+            a.setAttribute("id", this.id + "autocomplete-list");
+            a.setAttribute("class", "autocomplete-items");
 
 
+            this.parentNode.appendChild(a);
 
-var coll = document.getElementsByClassName("collapsible");
+            for (i = 0; i < arr.length; i++) {
 
-for (let i = 0; i < coll.length; i++) {
-    coll[i].addEventListener("click", function () {
-        this.classList.toggle("active");
-        var content = this.nextElementSibling;
-        if (content.style.display === "block") {
-            content.style.display = "none";
-        } else {
-            content.style.display = "block";
-        }
-    });
-}
+                if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
 
-const defaultImageUrl_sports = 'https://media.istockphoto.com/photos/various-sport-equipments-on-grass-picture-id949190756?k=20&m=949190756&s=170667a&w=0&h=RBVLWqBNY1OrRyUX-bi-gcEPtszzZOxzmU-ori5467M=';
-const defaultImageUrl_science = 'https://static.theprint.in/wp-content/uploads/2019/11/science.jpg';
-const defaultImageUrl_news = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtvNKlYPKnDEOTqYIB4xU-U-NkSaePiE9FBQ&usqp=CAU';
+                    b = document.createElement("DIV");
 
-async function fetchSportsData() {
-    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1202395f2c989ad8a2cbe9a0c4aae6ea6fcdf&category=sports&language=en');
-    let data = await response.json();
-    console.log(data.results);
-    show(data.results, 'sports', defaultImageUrl_sports);
-}
+                    b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                    b.innerHTML += arr[i].substr(val.length);
 
-async function fetchNewsData() {
-    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1220618b0701da7c91f3238ec74273a8d80fd&category=top&language=en');
-    let data = await response.json();
-    show(data.results, 'news', defaultImageUrl_news);
-}
+                    b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
 
+                    b.addEventListener("click", function (e) {
 
-async function fetchScienceData() {
+                        inp.value = this.getElementsByTagName("input")[0].value;
 
-    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1220618b0701da7c91f3238ec74273a8d80fd&category=science&language=en');
-    let data = await response.json();
-    show(data.results, 'science', defaultImageUrl_science);
-}
-
-function show(data, category, defaultUrl) {
-    const ul = document.getElementById(category);
-    const list = document.createDocumentFragment();
-
-    data.map((val) => {
-        let listItem = document.createElement('li');
-        let item = document.createElement('div');
-        if (val.image_url !== null) {
-            item.style.backgroundImage = `url(${val.image_url})`;
-        }
-
-        else {
-            item.style.backgroundImage = `url('${defaultUrl}')`;
-        }
-
-        item.style.backgroundSize = 'cover';
-
-        item.style.backgroundRepeat = 'no-repeat';
-
-        item.style.height = '100%';
-
-        item.style.width = '100%';
-        https://rapidapi.com/segjsierra-tYlPlZHk_bd/api/current-news/
-
-        item.addEventListener('click', () => {
-            let modal = document.querySelector('.modal-class');
-            let title = document.querySelector('.modal-title');
-            let image = document.querySelector('.modal-image');
-            let description = document.querySelector('.modal-description');
-
-
-            title.textContent = val.title;
-
-            if (val.image_url !== null) {
-                image.src = val.image_url;
+                        closeAllLists();
+                    });
+                    a.appendChild(b);
+                }
             }
-
-            else {
-                image.src = defaultUrl;
-            }
-
-            //description.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip';
-
-            if (val.description === null) {
-                description.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip';
-            }
-
-            else {
-                description.textContent = val.description;
-            }
-
-            modal.showModal();
         });
 
-        let closeArrow = document.querySelector('.close');
+        inp.addEventListener("keydown", function (e) {
+            var x = document.getElementById(this.id + "autocomplete-list");
+            if (x) x = x.getElementsByTagName("div");
+            if (e.keyCode == 40) {
 
-        closeArrow.addEventListener('click', () => {
-            let modal = document.querySelector('.modal-class');
-            modal.close();
-        })
+                currentFocus++;
+
+                addActive(x);
+            } else if (e.keyCode == 38) {
+                currentFocus--;
+
+                addActive(x);
+            } else if (e.keyCode == 13) {
+
+                e.preventDefault();
+                if (currentFocus > -1) {
+
+                    if (x) x[currentFocus].click();
+                }
+            }
+        });
+        function addActive(x) {
+
+            if (!x) return false;
+
+            removeActive(x);
+            if (currentFocus >= x.length) currentFocus = 0;
+            if (currentFocus < 0) currentFocus = (x.length - 1);
+
+            x[currentFocus].classList.add("autocomplete-active");
+        }
+        function removeActive(x) {
+
+            for (var i = 0; i < x.length; i++) {
+                x[i].classList.remove("autocomplete-active");
+            }
+        }
+        function closeAllLists(elmnt) {
+
+            var x = document.getElementsByClassName("autocomplete-items");
+            for (var i = 0; i < x.length; i++) {
+                if (elmnt != x[i] && elmnt != inp) {
+                    x[i].parentNode.removeChild(x[i]);
+                }
+            }
+        }
+
+        document.addEventListener("click", function (e) {
+            closeAllLists(e.target);
+        });
+    }
+
+    var keywords = ["Business", "Entertainment", "Environment", "Food", "Health", "Politics", "Science", "Sports", "Technology", "Top", "World", "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua & Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia & Herzegovina", "Botswana", "Brazil", "British Virgin Islands", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central Arfrican Republic", "Chad", "Chile", "China", "Colombia", "Congo", "Cook Islands", "Costa Rica", "Cote D Ivoire", "Croatia", "Cuba", "Curacao", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands", "Faroe Islands", "Fiji", "Finland", "France", "French Polynesia", "French West Indies", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauro", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "Norway", "Oman", "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russia", "Rwanda", "Saint Pierre & Miquelon", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "St Kitts & Nevis", "St Lucia", "St Vincent", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor L'Este", "Togo", "Tonga", "Trinidad & Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks & Caicos", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States of America", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen", "Zambia", "Zimbabwe"];
 
 
-        let titleContent = item.appendChild(document.createElement('div'));
+    autocomplete(document.getElementById("search-news"), keywords);
 
-        titleContent.style.color = 'white';
 
-        titleContent.style.fontWeight = '900';
 
-        titleContent.style.fontSize = '15px';
 
-        titleContent.style.overflowWrap = 'break-word';
+    //Hamburger
 
-        titleContent.textContent = val.title;
+    window.addEventListener("resize", function () {
+        if (window.screen.availWidth >= 600) {
+            let menu = document.getElementById("ham-items");
+            menu.style.display = "none";
+        }
+    })
 
-        item.appendChild(titleContent);
+    function showHamburger() {
 
-        // item.style.overflow = 'hidden';
+        let menu = document.getElementById("ham-items");
+        if (menu.style.display === "none") {
+            menu.style.display = "block";
+        }
+        else {
+            menu.style.display = "none";
+        }
+    }
 
-        titleContent.style.overflow = 'hidden';
 
-        titleContent.style.textOverflow = 'ellipsis';
 
-        listItem.appendChild(item);
+   
 
-        list.appendChild(listItem);
-    });
+    var coll = document.getElementsByClassName("collapsible");
 
-    ul.appendChild(list);
-}
+    for (let i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    }
 
-fetchSportsData();
+    const defaultImageUrl_sports = 'https://media.istockphoto.com/photos/various-sport-equipments-on-grass-picture-id949190756?k=20&m=949190756&s=170667a&w=0&h=RBVLWqBNY1OrRyUX-bi-gcEPtszzZOxzmU-ori5467M=';
+    const defaultImageUrl_science = 'https://static.theprint.in/wp-content/uploads/2019/11/science.jpg';
+    const defaultImageUrl_news = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtvNKlYPKnDEOTqYIB4xU-U-NkSaePiE9FBQ&usqp=CAU';
 
-fetchNewsData();
+    async function fetchSportsData() {
+        let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1216262a30a16c99abf848979da06666a3393&category=sports&language=en');
+        let data = await response.json();
+        console.log(data.results);
+        show(data.results, 'sports', defaultImageUrl_sports);
+    }
 
-fetchScienceData();
+    async function fetchNewsData() {
+        let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1216262a30a16c99abf848979da06666a3393&category=top&language=en');
+        let data = await response.json();
+        show(data.results, 'news', defaultImageUrl_news);
+    }
+
+
+
+    async function fetchScienceData() {
+
+
+        let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1216262a30a16c99abf848979da06666a3393&category=science&language=en');
+        let data = await response.json();
+        show(data.results, 'science', defaultImageUrl_science);
+    }
+
+    function show(data, category, defaultUrl) {
+        const ul = document.getElementById(category);
+        const list = document.createDocumentFragment();
+
+
+        data.map((val) => {
+            let listItem = document.createElement('li');
+            let item = document.createElement('div');
+            if (val.image_url !== null) {
+                item.style.backgroundImage = `url(${val.image_url})`;
+            }
+
+
+            else {
+                item.style.backgroundImage = `url('${defaultUrl}')`;
+            }
+
+
+
+
+            item.style.backgroundSize = 'cover';
+
+
+            item.style.backgroundRepeat = 'no-repeat';
+
+            item.style.height = '100%';
+
+            item.style.width = '100%';
+
+
+            item.addEventListener('click', () => {
+                let modal = document.querySelector('.modal-class');
+                let title = document.querySelector('.modal-title');
+                let image = document.querySelector('.modal-image');
+                let description = document.querySelector('.modal-description');
+
+
+
+                title.textContent = val.title;
+
+
+                if (val.image_url !== null) {
+                    image.src = val.image_url;
+                }
+
+
+                else {
+                    image.src = defaultUrl;
+                }
+
+                
+
+                if (val.description === null) {
+                    description.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip';
+                }
+
+
+                else {
+                    description.textContent = val.description;
+                }
+
+
+                modal.showModal();
+        
+
+            let closeArrow = document.querySelector('.close');
+
+            closeArrow.addEventListener('click', () => {
+                let modal = document.querySelector('.modal-class');
+                modal.close();
+            });
+            
+            });
+
+
+
+            let titleContent = item.appendChild(document.createElement('div'));
+
+
+            titleContent.style.color = 'white';
+
+            titleContent.style.fontWeight = '900';
+
+            titleContent.style.fontSize = '15px';
+
+            titleContent.style.overflowWrap = 'break-word';
+
+            titleContent.textContent = val.title;
+
+            item.appendChild(titleContent);
+
+            // item.style.overflow = 'hidden';
+
+            titleContent.style.overflow = 'hidden';
+
+            titleContent.style.textOverflow = 'ellipsis';
+
+            listItem.appendChild(item);
+
+            list.appendChild(listItem);
+        });
+
+        ul.appendChild(list);
+    }
+
+    fetchSportsData();
+
+    fetchNewsData();
+
+    fetchScienceData();
 
 
 
