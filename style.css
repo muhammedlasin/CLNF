@@ -335,9 +335,10 @@ header {
     width: auto; */
 }
 
-/* .content>ul>li>div {
-    object-fit: scale-down;
-} */
+.content>ul>li>div {
+    width: 83%;
+    margin-left: -38px;
+}
 
 
 .content>ul>li>div>div {
