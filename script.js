@@ -35,16 +35,19 @@ fetch('https://current-news.p.rapidapi.com/news', options)
 function showSearch() {
     let parent = document.getElementById("parent-div");
     let box = document.getElementById("box-overlay");
-    let searchResults = document.getElementById("display")
+    let searchResults = document.getElementById("display");
+    // let footer_search = document.getElementById("normal");
     if (parent.style.display === "none") {
         parent.style.display = "block";
         box.style.display = "none";
-        searchResults.style.display = "none"
+        searchResults.style.display = "none";
+        // footer_search.style.display = "block";
     }
     else {
         parent.style.display = "none";
         box.style.display = "block";
         searchResults.style.display = "block";
+        // footer_search.style.display = "none";
     }
 }
 
@@ -135,10 +138,11 @@ function showNews(data) {
             content.appendChild(body);
 
         }
-
+        
     });
 
     ul.appendChild(list);
+
 
     
     pagination(ul);
@@ -160,6 +164,7 @@ function showNews(data) {
             a = document.createElement("DIV");
             a.setAttribute("id", this.id + "autocomplete-list");
             a.setAttribute("class", "autocomplete-items");
+
 
             this.parentNode.appendChild(a);
 
@@ -405,7 +410,9 @@ function showNews(data) {
     }
 
 
+
     async function fetchScienceData() {
+
 
         let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1216262a30a16c99abf848979da06666a3393&category=science&language=en');
         let data = await response.json();
@@ -416,12 +423,14 @@ function showNews(data) {
         const ul = document.getElementById(category);
         const list = document.createDocumentFragment();
 
+
         data.map((val) => {
             let listItem = document.createElement('li');
             let item = document.createElement('div');
             if (val.image_url !== null) {
                 item.style.backgroundImage = `url(${val.image_url})`;
             }
+
 
             else {
                 item.style.backgroundImage = `url('${defaultUrl}')`;
@@ -443,7 +452,9 @@ function showNews(data) {
                 let description = document.querySelector('.modal-description');
 
 
+
                 title.textContent = val.title;
+
 
                 if (val.image_url !== null) {
                     image.src = val.image_url;
@@ -455,9 +466,11 @@ function showNews(data) {
 
                 //description.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip';
 
+
                 if (val.description === null) {
                     description.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip';
                 }
+
 
                 else {
                     description.textContent = val.description;
@@ -474,7 +487,9 @@ function showNews(data) {
             })
 
 
+
             let titleContent = item.appendChild(document.createElement('div'));
+
 
             titleContent.style.color = 'white';
 
