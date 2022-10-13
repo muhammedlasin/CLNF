@@ -3,7 +3,7 @@
 const options = {
     method: 'GET',
     headers: {
-        'X-RapidAPI-Key': '328aa9ca11msh080b545b7552596p182b44jsne2b7cbb76248',
+        'X-RapidAPI-Key': '6d053bb8e4mshcfe8dda8e785388p1bf52ajsn78d181cfacb2',
         'X-RapidAPI-Host': 'current-news.p.rapidapi.com'
     }
 };
@@ -12,7 +12,7 @@ const options = {
 fetch('https://current-news.p.rapidapi.com/news', options)
     .then(
         function (response) {
-
+            console.log(response);
             response.json().then(
                 function (data) {
                     let x = Math.floor(Math.random() * 20);
@@ -35,19 +35,32 @@ fetch('https://current-news.p.rapidapi.com/news', options)
 function showSearch() {
     let parent = document.getElementById("parent-div");
     let box = document.getElementById("box-overlay");
-    let searchResults = document.getElementById("display");
-    // let footer_search = document.getElementById("normal");
+
+    let searchResults = document.getElementById("display")
+    let arrow = document.getElementById("arrow");
+
+
     if (parent.style.display === "none") {
         parent.style.display = "block";
         box.style.display = "none";
         searchResults.style.display = "none";
-        // footer_search.style.display = "block";
+
+        arrow.style.display = "none";
+
     }
     else {
+        let lis = document.querySelectorAll('#display-ul li');
         parent.style.display = "none";
         box.style.display = "block";
         searchResults.style.display = "block";
-        // footer_search.style.display = "none";
+
+        if (lis.length != 0) {
+            arrow.style.display = "flex";
+        }
+        else {
+            arrow.style.display = "none";
+        }
+
     }
 }
 
@@ -64,7 +77,15 @@ async function fetchText(url) {
     let response = await fetch(url);
     let data = await response.json();
     console.log(data.results);
+    let arrow = document.getElementById("arrow");
+    if (data.results != 0) {
+        arrow.style.display = "flex";
+    }
+    else {
+        arrow.style.display = "none";
+    }
     showNews(data.results);
+
 }
 
 
@@ -74,10 +95,21 @@ async function fetchText(url) {
 function showNews(data) {
 
     var lis = document.querySelectorAll('#display-ul li');
+
     if (lis.length != 0) {
         console.log(lis.length);
-        for (var i = 0; li = lis[i]; i++) {
+        for (let i = 0; li = lis[i]; i++) {
             li.parentNode.removeChild(li);
+        }
+    }
+
+
+
+    var buttonList = document.querySelectorAll("#pagination-numbers button");
+
+    if (buttonList.length != 0) {
+        for (let i = 0; button = buttonList[i]; i++) {
+            button.parentNode.removeChild(button);
         }
     }
 
@@ -144,8 +176,116 @@ function showNews(data) {
     ul.appendChild(list);
 
 
-    
-    pagination(ul);
+
+
+
+
+    // pagination
+
+
+    const paginationNumbers = document.getElementById("pagination-numbers");
+    const paginatedList = document.getElementById("display-ul");
+    const listItems = paginatedList.querySelectorAll("li");
+    const nextButton = document.getElementById("next-button");
+    const prevButton = document.getElementById("prev-button");
+
+    const paginationLimit = 5;
+    const pageCount = Math.ceil(listItems.length / paginationLimit);
+    let currentPage = 1;
+
+    const disableButton = (button) => {
+        button.classList.add("disabled");
+        button.setAttribute("disabled", true);
+    };
+
+    const enableButton = (button) => {
+        button.classList.remove("disabled");
+        button.removeAttribute("disabled");
+    };
+
+    const handlePageButtonsStatus = () => {
+        if (currentPage === 1) {
+            disableButton(prevButton);
+        } else {
+            enableButton(prevButton);
+        }
+
+        if (pageCount === currentPage) {
+            disableButton(nextButton);
+        } else {
+            enableButton(nextButton);
+        }
+    };
+
+    const handleActivePageNumber = () => {
+        document.querySelectorAll(".pagination-number").forEach((button) => {
+            button.classList.remove("active");
+            const pageIndex = Number(button.getAttribute("page-index"));
+            if (pageIndex == currentPage) {
+                button.classList.add("active");
+            }
+        });
+    };
+
+    const appendPageNumber = (index) => {
+        const pageNumber = document.createElement("button");
+        pageNumber.className = "pagination-number";
+        pageNumber.innerHTML = index;
+        pageNumber.setAttribute("page-index", index);
+        pageNumber.setAttribute("aria-label", "Page " + index);
+
+        paginationNumbers.appendChild(pageNumber);
+    };
+
+    const getPaginationNumbers = () => {
+        for (let i = 1; i <= pageCount; i++) {
+            appendPageNumber(i);
+        }
+    };
+
+    const setCurrentPage = (pageNum) => {
+        currentPage = pageNum;
+
+        handleActivePageNumber();
+        handlePageButtonsStatus();
+
+        const prevRange = (pageNum - 1) * paginationLimit;
+        const currRange = pageNum * paginationLimit;
+
+        listItems.forEach((item, index) => {
+            item.classList.add("hidden");
+            if (index >= prevRange && index < currRange) {
+                item.classList.remove("hidden");
+            }
+        });
+    };
+
+
+    getPaginationNumbers();
+    setCurrentPage(1);
+
+    prevButton.addEventListener("click", () => {
+        setCurrentPage(currentPage - 1);
+    });
+
+    nextButton.addEventListener("click", () => {
+        setCurrentPage(currentPage + 1);
+    });
+
+    document.querySelectorAll(".pagination-number").forEach((button) => {
+        const pageIndex = Number(button.getAttribute("page-index"));
+
+        if (pageIndex) {
+            button.addEventListener("click", () => {
+                setCurrentPage(pageIndex);
+            });
+        }
+    });
+
+
+
+}
+
 
 }
     // Auto Complete
@@ -272,111 +412,7 @@ function showNews(data) {
 
 
 
-    //Pagination
-
-    function pagination(ul) {
-
-        const paginationNumbers = document.getElementById("pagination-numbers");
-        const paginatedList = ul;
-        const listItems = paginatedList.querySelectorAll("li");
-
-        const paginationLimit = 3;
-        const pageCount = Math.ceil(listItems.length / paginationLimit);
-        let currentPage = 1;
-
-        const disableButton = (button) => {
-            button.classList.add("disabled");
-            button.setAttribute("disabled", true);
-        };
-
-        const enableButton = (button) => {
-            button.classList.remove("disabled");
-            button.removeAttribute("disabled");
-        };
-
-        const handlePageButtonsStatus = () => {
-            if (currentPage === 1) {
-                disableButton(prevButton);
-            } else {
-                enableButton(prevButton);
-            }
-
-            if (pageCount === currentPage) {
-                disableButton(nextButton);
-            } else {
-                enableButton(nextButton);
-            }
-        };
-
-        const handleActivePageNumber = () => {
-            document.querySelectorAll(".pagination-number").forEach((button) => {
-                button.classList.remove("active");
-                const pageIndex = Number(button.getAttribute("page-index"));
-                if (pageIndex == currentPage) {
-                    button.classList.add("active");
-                }
-            });
-        };
-
-        const appendPageNumber = (index) => {
-            const pageNumber = document.createElement("button");
-            pageNumber.className = "pagination-number";
-            pageNumber.innerHTML = index;
-            pageNumber.setAttribute("page-index", index);
-            pageNumber.setAttribute("aria-label", "Page " + index);
-
-            paginationNumbers.appendChild(pageNumber);
-        };
-
-        const getPaginationNumbers = () => {
-            for (let i = 1; i <= pageCount; i++) {
-                appendPageNumber(i);
-            }
-        };
-
-        const setCurrentPage = (pageNum) => {
-            currentPage = pageNum;
-
-            listItems.forEach((item, index) => {
-                console.log(item);
-                item.classList.add("hidden");
-                if (index >= prevRange && index < currRange) {
-                    item.classList.remove("hidden");
-                }
-            });
-            handleActivePageNumber();
-            handlePageButtonsStatus();
-
-            const prevRange = (pageNum - 1) * paginationLimit;
-            const currRange = pageNum * paginationLimit;
-
-
-        };
-
-        getPaginationNumbers();
-        setCurrentPage(1);
-
-        prevButton.addEventListener("click", () => {
-            setCurrentPage(currentPage - 1);
-        });
-
-        nextButton.addEventListener("click", () => {
-            setCurrentPage(currentPage + 1);
-        });
-
-        document.querySelectorAll(".pagination-number").forEach((button) => {
-            const pageIndex = Number(button.getAttribute("page-index"));
-
-            if (pageIndex) {
-                button.addEventListener("click", () => {
-                    setCurrentPage(pageIndex);
-                });
-            }
-        });
-
-
-    }
-
+   
 
     var coll = document.getElementsByClassName("collapsible");
 
@@ -436,7 +472,11 @@ function showNews(data) {
                 item.style.backgroundImage = `url('${defaultUrl}')`;
             }
 
+
+
+
             item.style.backgroundSize = 'cover';
+
 
             item.style.backgroundRepeat = 'no-repeat';
 
@@ -460,12 +500,12 @@ function showNews(data) {
                     image.src = val.image_url;
                 }
 
+
                 else {
                     image.src = defaultUrl;
                 }
 
-                //description.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip';
-
+                
 
                 if (val.description === null) {
                     description.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip';
@@ -476,15 +516,18 @@ function showNews(data) {
                     description.textContent = val.description;
                 }
 
+
                 modal.showModal();
-            });
+        
 
             let closeArrow = document.querySelector('.close');
 
             closeArrow.addEventListener('click', () => {
                 let modal = document.querySelector('.modal-class');
                 modal.close();
-            })
+            });
+            
+            });
 
 
 
