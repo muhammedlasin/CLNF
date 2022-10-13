@@ -86,10 +86,11 @@ header {
     width: 80%;
     margin-bottom: 40px;
 
-
 }
 
+
 .banner {
+
     position: relative;
     width: 100%;
     height: 700px;
@@ -105,18 +106,144 @@ header {
     padding-top: 500px;
     padding-left: 15px;
     color: white;
+  }
+  .weather1{
+  height:22vh; 
+  margin: 0;
+  font-family:'Open Sans', sans-serif;
+  background: #222;
+  font-size:70%;
+  display:grid;
+  grid-template-columns: repeat(3,1fr);
+  padding:0.5em;
+  gap:0em 4em;
+  color: antiquewhite;
 }
+.weathercity{
+    padding-left:1em;
+    padding-top: 40px;
+    font-size:2em;
+}
+.tempc{
+    padding-left:0.5em;
+    font-size:3em;
+}
+.feelslike{
+    padding-top:40px;
+}
+.flex {
+    display: flex;
+    align-items:center; 
+}
+.icon{
+    height:100px ;
+    width:100px;
+}
+.description {
+    text-transform: capitalize;
+    margin-left: 8px;
+
+.card{
+    padding-top:8px;
+    height:8vh;
+    color: white;
+    border-radius:30px;
+    width:90%;
+    max-width:420px;
+    margin:1em;
+  }
+#options1{
+    height:45px;
+    font-size: 22px;  
+    padding:2px 0px;
+    border-radius:7px;
+    background:#fff;
+    justify-content:space-between;
+    color:#222;
+}
+#options1 option{
+    display:flex;
+    cursor:pointer;
+    align-items: center; 
+}
+@media only screen and (max-width:600px){
+    .weather1{
+        height:20vh;
+        font-size: 60%;
+        padding:0.5em;
+        gap:0em 2em;
+        color: antiquewhite;
+      }
+    .icon{
+        height:100px;
+        width:100px;
+    }
+    .card{
+        padding-top:7px;
+        height:7vh;
+        color: white;
+        border-radius:30px;
+      }
+    #options1{
+        height:47px;
+        font-size:18px;  
+        padding:2px 0px;
+    }
+}
+@media only screen and (min-width:768px){
+    .weather1{
+        height:22vh;
+        font-size: 80%;
+        padding:0.5em;
+        gap:0em 8em;
+    }
+    .icon{
+        height:100px;
+        width:100px;
+    }
+    .card{
+        padding-top:12px;
+        height:7vh;
+    }
+    #options1{
+        height:47px;
+        font-size:18px;  
+        padding:2px 0px;
+    }
+
+
+}
+@media only screen and (min-width:1200px){
+    .weather1{
+        height:25vh;
+        font-size: 90%;
+        padding:0.5em;
+        gap:0em 10em;
+        color: antiquewhite;
+      }
+    .icon{
+        height:120px;
+        width:120px;
+    }
+    .card{
+        padding-top:7px;
+        height:8vh;
+        color: white;
+        border-radius:30px;
+      }
+    #options1{
+        height:47px;
+        font-size:18px;  
+        padding:3px 24px;
+    }
+}
+
 
 .banner-content h1 {
     background-color: rgba(0, 0, 0, 0.5);
     padding: 10px;
 }
 
-footer {
-    width: 100%;
-    background-color: #3f3f3f;
-    height: 300px;
-}
 
 #box-overlay {
     display: none;
@@ -637,6 +764,7 @@ a {
 .list2 {
     list-style: none;
     padding-left: 0px;
+    padding-top: 20px;
 }
 
 
@@ -645,10 +773,12 @@ a {
     list-style: none;
     display: flex;
     padding-left: 0px;
+    padding-top: 20px;
 }
 
 #display{
-    min-height: 52vh;
+    min-height: 52.1vh;
+    display: none;
 }
 
 /* Extra small devices (phones, 600px and down) */
@@ -658,7 +788,8 @@ a {
     }
 
     #display{
-        min-height: 67vh;
+        min-height: 63.5vh;
+        display: none;
     }
 
     footer {
@@ -797,3 +928,4 @@ a {
 
 
 }
+
