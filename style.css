@@ -25,18 +25,17 @@ header{
     background-color:brown;  
 }
 .weather1{
-  height:25vh;
+  height:22vh; 
   margin: 0;
   font-family:'Open Sans', sans-serif;
   background: #222;
-  font-size: 90%;
+  font-size:70%;
   display:grid;
   grid-template-columns: repeat(3,1fr);
   padding:0.5em;
-  gap:0em 12em;
+  gap:0em 4em;
   color: antiquewhite;
 }
-
 .weathercity{
     padding-left:1em;
     padding-top: 40px;
@@ -49,28 +48,31 @@ header{
 .feelslike{
     padding-top:40px;
 }
-.pressure{
-    padding-left:1em;
-    font-size:1.5em;
+.flex {
+    display: flex;
+    align-items:center; 
 }
-.humidity{
-    font-size:1.5em;
+.icon{
+    height:100px ;
+    width:100px;
 }
-.wind{
-    font-size:1.5em;
-    float: right;
+.description {
+    text-transform: capitalize;
+    margin-left: 8px;
 }
-.precip{
-    font-size:1.5em;
-}
-.select-btn{
-    overflow:auto;
-    height:150px;
-}
+.card{
+    padding-top:8px;
+    height:8vh;
+    color: white;
+    border-radius:30px;
+    width:90%;
+    max-width:420px;
+    margin:1em;
+  }
 #options1{
-    height:65px;
+    height:45px;
     font-size: 22px;  
-    padding:0 20px;
+    padding:2px 0px;
     border-radius:7px;
     background:#fff;
     justify-content:space-between;
@@ -81,25 +83,80 @@ header{
     cursor:pointer;
     align-items: center; 
 }
-.card{
-  height:10vh;
-  color: white;
-  border-radius:30px;
-  width: 90%;
-  max-width:420px;
-  margin:1em;
+@media only screen and (max-width:600px){
+    .weather1{
+        height:20vh;
+        font-size: 60%;
+        padding:0.5em;
+        gap:0em 2em;
+        color: antiquewhite;
+      }
+    .icon{
+        height:100px;
+        width:100px;
+    }
+    .card{
+        padding-top:7px;
+        height:7vh;
+        color: white;
+        border-radius:30px;
+      }
+    #options1{
+        height:47px;
+        font-size:18px;  
+        padding:2px 0px;
+    }
 }
-.flex {
-    display: flex;
-    align-items:center;
+@media only screen and (min-width:768px){
+    .weather1{
+        height:22vh;
+        font-size: 80%;
+        padding:0.5em;
+        gap:0em 8em;
+    }
+    .icon{
+        height:100px;
+        width:100px;
+    }
+    .card{
+        padding-top:12px;
+        height:7vh;
+    }
+    #options1{
+        height:47px;
+        font-size:18px;  
+        padding:2px 0px;
+    }
+
 }
-.description {
-    text-transform: capitalize;
-    margin-left: 8px;
+@media only screen and (min-width:1200px){
+    .weather1{
+        height:25vh;
+        font-size: 90%;
+        padding:0.5em;
+        gap:0em 10em;
+        color: antiquewhite;
+      }
+    .icon{
+        height:120px;
+        width:120px;
+    }
+    .card{
+        padding-top:7px;
+        height:8vh;
+        color: white;
+        border-radius:30px;
+      }
+    #options1{
+        height:47px;
+        font-size:18px;  
+        padding:3px 24px;
+    }
 }
 footer{
     width: 100%;
     background-color: #3f3f3f;
     height: 300px;
 }
+
 
