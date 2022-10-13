@@ -35,16 +35,19 @@ fetch('https://current-news.p.rapidapi.com/news', options)
 function showSearch() {
     let parent = document.getElementById("parent-div");
     let box = document.getElementById("box-overlay");
-    let searchResults = document.getElementById("display")
+    let searchResults = document.getElementById("display");
+    // let footer_search = document.getElementById("normal");
     if (parent.style.display === "none") {
         parent.style.display = "block";
         box.style.display = "none";
-        searchResults.style.display = "none"
+        searchResults.style.display = "none";
+        // footer_search.style.display = "block";
     }
     else {
         parent.style.display = "none";
         box.style.display = "block";
         searchResults.style.display = "block";
+        // footer_search.style.display = "none";
     }
 }
 
@@ -135,18 +138,40 @@ function showNews(data) {
             content.appendChild(body);
 
         }
-
+        
     });
 
     ul.appendChild(list);
-
-    pagination(ul);
-
-
-
-
-
-
+    // image.addEventListener('click', () => {
+    //     let modal1 = document.querySelector('.modal-class1');
+    //     let title1 = document.querySelector('.modal-title1');
+    //     let image1 = document.querySelector('.modal-image1');
+    //     let description1 = document.querySelector('.modal-description1');
+    
+    
+    //     title1.textContent = post.title;
+    
+    //     //description.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip';
+    
+    //     if (post.description === null) {
+    //         description1.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip';
+    //     }
+    
+    //     else {
+    //         description1.textContent = post.description;
+    //     }
+    
+    //     modal1.showModal();
+    // });
+    
+    // let closeArrow1 = document.querySelector('.close1');
+    
+    // closeArrow1.addEventListener('click', () => {
+    //     let modal1 = document.querySelector('.modal-class1');
+    //     modal1.close();
+    // })
+    
+}
 
 
 // Auto Complete
@@ -397,14 +422,14 @@ const defaultImageUrl_science = 'https://static.theprint.in/wp-content/uploads/2
 const defaultImageUrl_news = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtvNKlYPKnDEOTqYIB4xU-U-NkSaePiE9FBQ&usqp=CAU';
 
 async function fetchSportsData() {
-    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1220618b0701da7c91f3238ec74273a8d80fd&category=sports&language=en');
+    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1202395f2c989ad8a2cbe9a0c4aae6ea6fcdf&category=sports&language=en');
     let data = await response.json();
     console.log(data.results);
-    show(data.results, 'sports',defaultImageUrl_sports);
+    show(data.results, 'sports', defaultImageUrl_sports);
 }
 
 async function fetchNewsData() {
-    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1220618b0701da7c91f3238ec74273a8d80fd&category=top&language=en');
+    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1202395f2c989ad8a2cbe9a0c4aae6ea6fcdf&category=top&language=en');
     let data = await response.json();
     show(data.results, 'news', defaultImageUrl_news);
 }
@@ -412,7 +437,7 @@ async function fetchNewsData() {
 
 async function fetchScienceData() {
 
-    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1220618b0701da7c91f3238ec74273a8d80fd&category=science&language=en');
+    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1202395f2c989ad8a2cbe9a0c4aae6ea6fcdf&category=science&language=en');
     let data = await response.json();
     show(data.results, 'science', defaultImageUrl_science);
 }
@@ -446,7 +471,7 @@ function show(data, category, defaultUrl) {
             let title = document.querySelector('.modal-title');
             let image = document.querySelector('.modal-image');
             let description = document.querySelector('.modal-description');
-            
+
 
             title.textContent = val.title;
 
@@ -459,8 +484,8 @@ function show(data, category, defaultUrl) {
             }
 
             //description.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip';
-            
-            if(val.description === null) {
+
+            if (val.description === null) {
                 description.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip';
             }
 
@@ -477,7 +502,6 @@ function show(data, category, defaultUrl) {
             let modal = document.querySelector('.modal-class');
             modal.close();
         })
-
 
         let titleContent = item.appendChild(document.createElement('div'));
 
