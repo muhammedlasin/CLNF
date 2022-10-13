@@ -8,7 +8,7 @@ header {
     background-color: black;
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 100;
     overflow: hidden;
     padding: 20px 10px;
 }
@@ -66,17 +66,21 @@ header {
 }
 
 
-
-
 .search-btn {
     float: right;
     margin-top: 30px;
     height: 40px;
     width: 7%;
-    border: solid 2px;
+    border: solid 2px wheat;
     border-radius: 5px;
     background-color: black;
     color: white;
+}
+
+.search-btn:active {
+    background-color: wheat;
+    color: black;
+
 }
 
 
@@ -271,6 +275,13 @@ header {
     background-size: cover;
 }
 
+.image:hover {
+
+    filter: brightness(120%);
+}
+
+
+
 
 .search-content {
 
@@ -413,7 +424,8 @@ input[type=text] {
     .hamburger-items {
         display: none;
         width: 102%;
-        height: 150px;
+        min-height: 10vh;
+        max-height: 30vh;
         background-color: black;
     }
 
@@ -421,7 +433,7 @@ input[type=text] {
         float: left;
         color: white;
         text-align: center;
-        padding: 30px;
+        padding: 24px;
         text-decoration: none;
         font-size: 18px;
         line-height: 25px;
@@ -554,7 +566,7 @@ input[type=text] {
     display: none;
 }
 
-}    
+
 
 
 .content-main {
@@ -562,7 +574,8 @@ input[type=text] {
     margin-bottom: 30px;
 }
 
-.modal-class::backdrop {
+.modal-class::backdrop,
+.modal-class1::backdrop {
     background: rgb(0 0 0 / 0.4);
     filter: blur(20px);
 }
@@ -571,13 +584,13 @@ input[type=text] {
     .content>ul {
         display: grid;
         grid-template-rows: repeat(3, 1fr);
-        overflow-x: hidden;
+        /* overflow-x: hidden; */
         /* width: 100%; */
     }
 
     .content>ul>li {
         height: 300px;
-        width: auto;
+
     }
 
     .content>ul>li>div {
@@ -594,7 +607,8 @@ input[type=text] {
     
 } */
 
-.modal-class {
+.modal-class,
+.modal-class1 {
     margin: 0px auto;
     padding: 40px 40px;
     background: #fff;
@@ -630,7 +644,8 @@ input[type=text] {
     text-align: justify;
 }
 
-.close {
+.close,
+.close1 {
     position: absolute;
     top: 0px;
     right: 0px;
@@ -659,9 +674,9 @@ footer {
     background-color: black;
     height: 300px;
 
-    display:flex; 
-    flex-direction:column; 
-    justify-content:space-between;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
 }
 
@@ -670,11 +685,7 @@ body {
     overflow-x: hidden;
 }
 
-@media only screen and (max-width: 600px) {
-    * {
-        overflow-x: hidden;
-    } 
-}
+
 
 .collapsible {
     background-color: black;
@@ -776,8 +787,10 @@ a {
     padding-top: 20px;
 }
 
+
 #display{
-    min-height: 52.1vh;
+    min-height: 58.3vh;
+
     display: none;
 }
 
@@ -787,9 +800,10 @@ a {
         display: none;
     }
 
-    #display{
-        min-height: 63.5vh;
-        display: none;
+
+    #display {
+        min-height: 67vh;
+
     }
 
     footer {
@@ -797,7 +811,8 @@ a {
         margin-top: 3vh;
     }
 
-    .modal-class {
+    .modal-class,
+    .modal-class1 {
         margin: 0px auto;
         padding: 40px 40px;
         background: #fff;
@@ -825,7 +840,8 @@ a {
         display: none;
     }
 
-    .modal-class {
+    .modal-class,
+    .modal-class1 {
         margin: 0px auto;
         padding: 40px 40px;
         background: #fff;
@@ -852,7 +868,8 @@ a {
         display: none;
     }
 
-    .modal-class {
+    .modal-class,
+    .modal-class1 {
         margin: 0px auto;
         padding: 40px 40px;
         background: #fff;
@@ -879,7 +896,8 @@ a {
         display: none;
     }
 
-    .modal-class {
+    .modal-class,
+    .modal-class1 {
         margin: 0px auto;
         padding: 40px 40px;
         background: #fff;
@@ -906,7 +924,8 @@ a {
         display: none;
     }
 
-    .modal-class {
+    .modal-class,
+    .modal-class1 {
         margin: 0px auto;
         padding: 40px 40px;
         background: #fff;
