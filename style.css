@@ -122,6 +122,9 @@ header {
   padding:0.5em;
   gap:0em 4em;
   color: antiquewhite;
+  background-image: url('https://cdn.pixabay.com/photo/2018/08/23/07/35/thunderstorm-3625405_960_720.jpg') ;
+  background-position: center;
+  background-size: cover;
 }
 .weathercity{
     padding-left:1em;
@@ -156,20 +159,25 @@ header {
     width:90%;
     max-width:420px;
     margin:1em;
+   
   }
 #options1{
     height:45px;
     font-size: 22px;  
     padding:2px 0px;
     border-radius:7px;
-    background:#fff;
     justify-content:space-between;
-    color:#222;
+    color:white;
+    background-color: transparent;
+    border:3px solid;
+    border-color:white;
+    margin-top:5px;
 }
 #options1 option{
     display:flex;
     cursor:pointer;
     align-items: center; 
+    color:black;
 }
 @media only screen and (max-width:600px){
     .weather1{
@@ -190,9 +198,10 @@ header {
         border-radius:30px;
       }
     #options1{
-        height:47px;
+        height:38px;
         font-size:18px;  
         padding:2px 0px;
+        margin-top: 11px;
     }
 }
 @media only screen and (min-width:768px){
@@ -211,9 +220,10 @@ header {
         height:7vh;
     }
     #options1{
-        height:47px;
+        height:38px;
         font-size:18px;  
         padding:2px 0px;
+        margin-top:11px;
     }
 
 
