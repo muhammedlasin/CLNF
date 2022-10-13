@@ -142,400 +142,386 @@ function showNews(data) {
     });
 
     ul.appendChild(list);
-    // image.addEventListener('click', () => {
-    //     let modal1 = document.querySelector('.modal-class1');
-    //     let title1 = document.querySelector('.modal-title1');
-    //     let image1 = document.querySelector('.modal-image1');
-    //     let description1 = document.querySelector('.modal-description1');
+
+
     
-    
-    //     title1.textContent = post.title;
-    
-    //     //description.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip';
-    
-    //     if (post.description === null) {
-    //         description1.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip';
-    //     }
-    
-    //     else {
-    //         description1.textContent = post.description;
-    //     }
-    
-    //     modal1.showModal();
-    // });
-    
-    // let closeArrow1 = document.querySelector('.close1');
-    
-    // closeArrow1.addEventListener('click', () => {
-    //     let modal1 = document.querySelector('.modal-class1');
-    //     modal1.close();
-    // })
-    
+    pagination(ul);
+
 }
+    // Auto Complete
+
+    function autocomplete(inp, arr) {
+
+        var currentFocus;
+
+        inp.addEventListener("input", function (e) {
+            var a, b, i, val = this.value;
+
+            closeAllLists();
+            if (!val) { return false; }
+            currentFocus = -1;
+
+            a = document.createElement("DIV");
+            a.setAttribute("id", this.id + "autocomplete-list");
+            a.setAttribute("class", "autocomplete-items");
 
 
-// Auto Complete
+            this.parentNode.appendChild(a);
 
-function autocomplete(inp, arr) {
+            for (i = 0; i < arr.length; i++) {
 
-    var currentFocus;
+                if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
 
-    inp.addEventListener("input", function (e) {
-        var a, b, i, val = this.value;
+                    b = document.createElement("DIV");
 
-        closeAllLists();
-        if (!val) { return false; }
-        currentFocus = -1;
+                    b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                    b.innerHTML += arr[i].substr(val.length);
 
-        a = document.createElement("DIV");
-        a.setAttribute("id", this.id + "autocomplete-list");
-        a.setAttribute("class", "autocomplete-items");
+                    b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
 
-        this.parentNode.appendChild(a);
+                    b.addEventListener("click", function (e) {
 
-        for (i = 0; i < arr.length; i++) {
+                        inp.value = this.getElementsByTagName("input")[0].value;
 
-            if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                        closeAllLists();
+                    });
+                    a.appendChild(b);
+                }
+            }
+        });
 
-                b = document.createElement("DIV");
+        inp.addEventListener("keydown", function (e) {
+            var x = document.getElementById(this.id + "autocomplete-list");
+            if (x) x = x.getElementsByTagName("div");
+            if (e.keyCode == 40) {
 
-                b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-                b.innerHTML += arr[i].substr(val.length);
+                currentFocus++;
 
-                b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                addActive(x);
+            } else if (e.keyCode == 38) {
+                currentFocus--;
 
-                b.addEventListener("click", function (e) {
+                addActive(x);
+            } else if (e.keyCode == 13) {
 
-                    inp.value = this.getElementsByTagName("input")[0].value;
+                e.preventDefault();
+                if (currentFocus > -1) {
 
-                    closeAllLists();
-                });
-                a.appendChild(b);
+                    if (x) x[currentFocus].click();
+                }
+            }
+        });
+        function addActive(x) {
+
+            if (!x) return false;
+
+            removeActive(x);
+            if (currentFocus >= x.length) currentFocus = 0;
+            if (currentFocus < 0) currentFocus = (x.length - 1);
+
+            x[currentFocus].classList.add("autocomplete-active");
+        }
+        function removeActive(x) {
+
+            for (var i = 0; i < x.length; i++) {
+                x[i].classList.remove("autocomplete-active");
             }
         }
-    });
+        function closeAllLists(elmnt) {
 
-    inp.addEventListener("keydown", function (e) {
-        var x = document.getElementById(this.id + "autocomplete-list");
-        if (x) x = x.getElementsByTagName("div");
-        if (e.keyCode == 40) {
-
-            currentFocus++;
-
-            addActive(x);
-        } else if (e.keyCode == 38) {
-            currentFocus--;
-
-            addActive(x);
-        } else if (e.keyCode == 13) {
-
-            e.preventDefault();
-            if (currentFocus > -1) {
-
-                if (x) x[currentFocus].click();
+            var x = document.getElementsByClassName("autocomplete-items");
+            for (var i = 0; i < x.length; i++) {
+                if (elmnt != x[i] && elmnt != inp) {
+                    x[i].parentNode.removeChild(x[i]);
+                }
             }
         }
-    });
-    function addActive(x) {
 
-        if (!x) return false;
-
-        removeActive(x);
-        if (currentFocus >= x.length) currentFocus = 0;
-        if (currentFocus < 0) currentFocus = (x.length - 1);
-
-        x[currentFocus].classList.add("autocomplete-active");
+        document.addEventListener("click", function (e) {
+            closeAllLists(e.target);
+        });
     }
-    function removeActive(x) {
 
-        for (var i = 0; i < x.length; i++) {
-            x[i].classList.remove("autocomplete-active");
+    var keywords = ["Business", "Entertainment", "Environment", "Food", "Health", "Politics", "Science", "Sports", "Technology", "Top", "World", "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua & Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia & Herzegovina", "Botswana", "Brazil", "British Virgin Islands", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central Arfrican Republic", "Chad", "Chile", "China", "Colombia", "Congo", "Cook Islands", "Costa Rica", "Cote D Ivoire", "Croatia", "Cuba", "Curacao", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands", "Faroe Islands", "Fiji", "Finland", "France", "French Polynesia", "French West Indies", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauro", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "Norway", "Oman", "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russia", "Rwanda", "Saint Pierre & Miquelon", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "St Kitts & Nevis", "St Lucia", "St Vincent", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor L'Este", "Togo", "Tonga", "Trinidad & Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks & Caicos", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States of America", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen", "Zambia", "Zimbabwe"];
+
+
+    autocomplete(document.getElementById("search-news"), keywords);
+
+
+
+
+    //Hamburger
+
+    window.addEventListener("resize", function () {
+        if (window.screen.availWidth >= 600) {
+            let menu = document.getElementById("ham-items");
+            menu.style.display = "none";
         }
-    }
-    function closeAllLists(elmnt) {
+    })
 
-        var x = document.getElementsByClassName("autocomplete-items");
-        for (var i = 0; i < x.length; i++) {
-            if (elmnt != x[i] && elmnt != inp) {
-                x[i].parentNode.removeChild(x[i]);
-            }
-        }
-    }
+    function showHamburger() {
 
-    document.addEventListener("click", function (e) {
-        closeAllLists(e.target);
-    });
-}
-
-var keywords = ["Business", "Entertainment", "Environment", "Food", "Health", "Politics", "Science", "Sports", "Technology", "Top", "World", "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua & Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia & Herzegovina", "Botswana", "Brazil", "British Virgin Islands", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central Arfrican Republic", "Chad", "Chile", "China", "Colombia", "Congo", "Cook Islands", "Costa Rica", "Cote D Ivoire", "Croatia", "Cuba", "Curacao", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands", "Faroe Islands", "Fiji", "Finland", "France", "French Polynesia", "French West Indies", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauro", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "Norway", "Oman", "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russia", "Rwanda", "Saint Pierre & Miquelon", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "St Kitts & Nevis", "St Lucia", "St Vincent", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor L'Este", "Togo", "Tonga", "Trinidad & Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks & Caicos", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States of America", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen", "Zambia", "Zimbabwe"];
-
-
-autocomplete(document.getElementById("search-news"), keywords);
-
-
-
-
-//Hamburger
-
-window.addEventListener("resize", function () {
-    if (window.screen.availWidth >= 600) {
         let menu = document.getElementById("ham-items");
-        menu.style.display = "none";
-    }
-})
-
-function showHamburger() {
-
-    let menu = document.getElementById("ham-items");
-    if (menu.style.display === "none") {
-        menu.style.display = "block";
-    }
-    else {
-        menu.style.display = "none";
-    }
-}
-
-
-
-//Pagination
-
-function pagination(ul) {
-
-    const paginationNumbers = document.getElementById("pagination-numbers");
-    const paginatedList = ul;
-    const listItems = paginatedList.querySelectorAll("li");
-
-    const paginationLimit = 3;
-    const pageCount = Math.ceil(listItems.length / paginationLimit);
-    let currentPage = 1;
-
-    const disableButton = (button) => {
-        button.classList.add("disabled");
-        button.setAttribute("disabled", true);
-    };
-
-    const enableButton = (button) => {
-        button.classList.remove("disabled");
-        button.removeAttribute("disabled");
-    };
-
-    const handlePageButtonsStatus = () => {
-        if (currentPage === 1) {
-            disableButton(prevButton);
-        } else {
-            enableButton(prevButton);
+        if (menu.style.display === "none") {
+            menu.style.display = "block";
         }
-
-        if (pageCount === currentPage) {
-            disableButton(nextButton);
-        } else {
-            enableButton(nextButton);
-        }
-    };
-
-    const handleActivePageNumber = () => {
-        document.querySelectorAll(".pagination-number").forEach((button) => {
-            button.classList.remove("active");
-            const pageIndex = Number(button.getAttribute("page-index"));
-            if (pageIndex == currentPage) {
-                button.classList.add("active");
-            }
-        });
-    };
-
-    const appendPageNumber = (index) => {
-        const pageNumber = document.createElement("button");
-        pageNumber.className = "pagination-number";
-        pageNumber.innerHTML = index;
-        pageNumber.setAttribute("page-index", index);
-        pageNumber.setAttribute("aria-label", "Page " + index);
-
-        paginationNumbers.appendChild(pageNumber);
-    };
-
-    const getPaginationNumbers = () => {
-        for (let i = 1; i <= pageCount; i++) {
-            appendPageNumber(i);
-        }
-    };
-
-    const setCurrentPage = (pageNum) => {
-        currentPage = pageNum;
-
-        listItems.forEach((item, index) => {
-            console.log(item);
-            item.classList.add("hidden");
-            if (index >= prevRange && index < currRange) {
-                item.classList.remove("hidden");
-            }
-        });
-        handleActivePageNumber();
-        handlePageButtonsStatus();
-
-        const prevRange = (pageNum - 1) * paginationLimit;
-        const currRange = pageNum * paginationLimit;
-
-
-    };
-
-    getPaginationNumbers();
-    setCurrentPage(1);
-
-    prevButton.addEventListener("click", () => {
-        setCurrentPage(currentPage - 1);
-    });
-
-    nextButton.addEventListener("click", () => {
-        setCurrentPage(currentPage + 1);
-    });
-
-    document.querySelectorAll(".pagination-number").forEach((button) => {
-        const pageIndex = Number(button.getAttribute("page-index"));
-
-        if (pageIndex) {
-            button.addEventListener("click", () => {
-                setCurrentPage(pageIndex);
-            });
-        }
-    });
-
-
-}
-
-
-var coll = document.getElementsByClassName("collapsible");
-
-for (let i = 0; i < coll.length; i++) {
-    coll[i].addEventListener("click", function () {
-        this.classList.toggle("active");
-        var content = this.nextElementSibling;
-        if (content.style.display === "block") {
-            content.style.display = "none";
-        } else {
-            content.style.display = "block";
-        }
-    });
-}
-
-const defaultImageUrl_sports = 'https://media.istockphoto.com/photos/various-sport-equipments-on-grass-picture-id949190756?k=20&m=949190756&s=170667a&w=0&h=RBVLWqBNY1OrRyUX-bi-gcEPtszzZOxzmU-ori5467M=';
-const defaultImageUrl_science = 'https://static.theprint.in/wp-content/uploads/2019/11/science.jpg';
-const defaultImageUrl_news = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtvNKlYPKnDEOTqYIB4xU-U-NkSaePiE9FBQ&usqp=CAU';
-
-async function fetchSportsData() {
-    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1202395f2c989ad8a2cbe9a0c4aae6ea6fcdf&category=sports&language=en');
-    let data = await response.json();
-    console.log(data.results);
-    show(data.results, 'sports', defaultImageUrl_sports);
-}
-
-async function fetchNewsData() {
-    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1202395f2c989ad8a2cbe9a0c4aae6ea6fcdf&category=top&language=en');
-    let data = await response.json();
-    show(data.results, 'news', defaultImageUrl_news);
-}
-
-
-async function fetchScienceData() {
-
-    let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1202395f2c989ad8a2cbe9a0c4aae6ea6fcdf&category=science&language=en');
-    let data = await response.json();
-    show(data.results, 'science', defaultImageUrl_science);
-}
-
-function show(data, category, defaultUrl) {
-    const ul = document.getElementById(category);
-    const list = document.createDocumentFragment();
-
-    data.map((val) => {
-        let listItem = document.createElement('li');
-        let item = document.createElement('div');
-        if (val.image_url !== null) {
-            item.style.backgroundImage = `url(${val.image_url})`;
-        }
-
         else {
-            item.style.backgroundImage = `url('${defaultUrl}')`;
+            menu.style.display = "none";
         }
-
-        item.style.backgroundSize = 'cover';
-
-        item.style.backgroundRepeat = 'no-repeat';
-
-        item.style.height = '100%';
-
-        item.style.width = '100%';
+    }
 
 
-        item.addEventListener('click', () => {
-            let modal = document.querySelector('.modal-class');
-            let title = document.querySelector('.modal-title');
-            let image = document.querySelector('.modal-image');
-            let description = document.querySelector('.modal-description');
 
+    //Pagination
 
-            title.textContent = val.title;
+    function pagination(ul) {
 
-            if (val.image_url !== null) {
-                image.src = val.image_url;
+        const paginationNumbers = document.getElementById("pagination-numbers");
+        const paginatedList = ul;
+        const listItems = paginatedList.querySelectorAll("li");
+
+        const paginationLimit = 3;
+        const pageCount = Math.ceil(listItems.length / paginationLimit);
+        let currentPage = 1;
+
+        const disableButton = (button) => {
+            button.classList.add("disabled");
+            button.setAttribute("disabled", true);
+        };
+
+        const enableButton = (button) => {
+            button.classList.remove("disabled");
+            button.removeAttribute("disabled");
+        };
+
+        const handlePageButtonsStatus = () => {
+            if (currentPage === 1) {
+                disableButton(prevButton);
+            } else {
+                enableButton(prevButton);
             }
 
-            else {
-                image.src = defaultUrl;
+            if (pageCount === currentPage) {
+                disableButton(nextButton);
+            } else {
+                enableButton(nextButton);
             }
+        };
 
-            //description.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip';
+        const handleActivePageNumber = () => {
+            document.querySelectorAll(".pagination-number").forEach((button) => {
+                button.classList.remove("active");
+                const pageIndex = Number(button.getAttribute("page-index"));
+                if (pageIndex == currentPage) {
+                    button.classList.add("active");
+                }
+            });
+        };
 
-            if (val.description === null) {
-                description.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip';
+        const appendPageNumber = (index) => {
+            const pageNumber = document.createElement("button");
+            pageNumber.className = "pagination-number";
+            pageNumber.innerHTML = index;
+            pageNumber.setAttribute("page-index", index);
+            pageNumber.setAttribute("aria-label", "Page " + index);
+
+            paginationNumbers.appendChild(pageNumber);
+        };
+
+        const getPaginationNumbers = () => {
+            for (let i = 1; i <= pageCount; i++) {
+                appendPageNumber(i);
             }
+        };
 
-            else {
-                description.textContent = val.description;
-            }
+        const setCurrentPage = (pageNum) => {
+            currentPage = pageNum;
 
-            modal.showModal();
+            listItems.forEach((item, index) => {
+                console.log(item);
+                item.classList.add("hidden");
+                if (index >= prevRange && index < currRange) {
+                    item.classList.remove("hidden");
+                }
+            });
+            handleActivePageNumber();
+            handlePageButtonsStatus();
+
+            const prevRange = (pageNum - 1) * paginationLimit;
+            const currRange = pageNum * paginationLimit;
+
+
+        };
+
+        getPaginationNumbers();
+        setCurrentPage(1);
+
+        prevButton.addEventListener("click", () => {
+            setCurrentPage(currentPage - 1);
         });
 
-        let closeArrow = document.querySelector('.close');
+        nextButton.addEventListener("click", () => {
+            setCurrentPage(currentPage + 1);
+        });
 
-        closeArrow.addEventListener('click', () => {
-            let modal = document.querySelector('.modal-class');
-            modal.close();
-        })
+        document.querySelectorAll(".pagination-number").forEach((button) => {
+            const pageIndex = Number(button.getAttribute("page-index"));
 
-        let titleContent = item.appendChild(document.createElement('div'));
+            if (pageIndex) {
+                button.addEventListener("click", () => {
+                    setCurrentPage(pageIndex);
+                });
+            }
+        });
 
-        titleContent.style.color = 'white';
 
-        titleContent.style.fontWeight = '900';
+    }
 
-        titleContent.style.fontSize = '15px';
 
-        titleContent.style.overflowWrap = 'break-word';
+    var coll = document.getElementsByClassName("collapsible");
 
-        titleContent.textContent = val.title;
+    for (let i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    }
 
-        item.appendChild(titleContent);
+    const defaultImageUrl_sports = 'https://media.istockphoto.com/photos/various-sport-equipments-on-grass-picture-id949190756?k=20&m=949190756&s=170667a&w=0&h=RBVLWqBNY1OrRyUX-bi-gcEPtszzZOxzmU-ori5467M=';
+    const defaultImageUrl_science = 'https://static.theprint.in/wp-content/uploads/2019/11/science.jpg';
+    const defaultImageUrl_news = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtvNKlYPKnDEOTqYIB4xU-U-NkSaePiE9FBQ&usqp=CAU';
 
-        // item.style.overflow = 'hidden';
+    async function fetchSportsData() {
+        let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1216262a30a16c99abf848979da06666a3393&category=sports&language=en');
+        let data = await response.json();
+        console.log(data.results);
+        show(data.results, 'sports', defaultImageUrl_sports);
+    }
 
-        titleContent.style.overflow = 'hidden';
+    async function fetchNewsData() {
+        let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1216262a30a16c99abf848979da06666a3393&category=top&language=en');
+        let data = await response.json();
+        show(data.results, 'news', defaultImageUrl_news);
+    }
 
-        titleContent.style.textOverflow = 'ellipsis';
 
-        listItem.appendChild(item);
 
-        list.appendChild(listItem);
-    });
+    async function fetchScienceData() {
 
-    ul.appendChild(list);
-}
 
-fetchSportsData();
+        let response = await fetch('https://newsdata.io/api/1/news?apikey=pub_1216262a30a16c99abf848979da06666a3393&category=science&language=en');
+        let data = await response.json();
+        show(data.results, 'science', defaultImageUrl_science);
+    }
 
-fetchNewsData();
+    function show(data, category, defaultUrl) {
+        const ul = document.getElementById(category);
+        const list = document.createDocumentFragment();
 
-fetchScienceData();
+
+        data.map((val) => {
+            let listItem = document.createElement('li');
+            let item = document.createElement('div');
+            if (val.image_url !== null) {
+                item.style.backgroundImage = `url(${val.image_url})`;
+            }
+
+
+            else {
+                item.style.backgroundImage = `url('${defaultUrl}')`;
+            }
+
+            item.style.backgroundSize = 'cover';
+
+            item.style.backgroundRepeat = 'no-repeat';
+
+            item.style.height = '100%';
+
+            item.style.width = '100%';
+
+
+            item.addEventListener('click', () => {
+                let modal = document.querySelector('.modal-class');
+                let title = document.querySelector('.modal-title');
+                let image = document.querySelector('.modal-image');
+                let description = document.querySelector('.modal-description');
+
+
+
+                title.textContent = val.title;
+
+
+                if (val.image_url !== null) {
+                    image.src = val.image_url;
+                }
+
+                else {
+                    image.src = defaultUrl;
+                }
+
+                //description.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip';
+
+
+                if (val.description === null) {
+                    description.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, totam possimus pariatur esse numquam suntincidunt consequatur odio! Animi minus quos commodi recusandae tempora eius quis provident delectus distinctio est? Lorem ip';
+                }
+
+
+                else {
+                    description.textContent = val.description;
+                }
+
+                modal.showModal();
+            });
+
+            let closeArrow = document.querySelector('.close');
+
+            closeArrow.addEventListener('click', () => {
+                let modal = document.querySelector('.modal-class');
+                modal.close();
+            })
+
+
+
+            let titleContent = item.appendChild(document.createElement('div'));
+
+
+            titleContent.style.color = 'white';
+
+            titleContent.style.fontWeight = '900';
+
+            titleContent.style.fontSize = '15px';
+
+            titleContent.style.overflowWrap = 'break-word';
+
+            titleContent.textContent = val.title;
+
+            item.appendChild(titleContent);
+
+            // item.style.overflow = 'hidden';
+
+            titleContent.style.overflow = 'hidden';
+
+            titleContent.style.textOverflow = 'ellipsis';
+
+            listItem.appendChild(item);
+
+            list.appendChild(listItem);
+        });
+
+        ul.appendChild(list);
+    }
+
+    fetchSportsData();
+
+    fetchNewsData();
+
+    fetchScienceData();
 
 
 
