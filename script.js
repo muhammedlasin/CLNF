@@ -1,4 +1,8 @@
 
+function refresh() {
+    location.reload();
+}
+
 let weather = {
     fetchWeather: function (city) {
         fetch(
@@ -77,7 +81,9 @@ fetch('https://current-news.p.rapidapi.com/news', options)
                     let x = Math.floor(Math.random() * 20);
                     let img = data.news[x].urlToImage;
                     let heading = data.news[x].title;
-                    document.getElementById("main-news").style.backgroundImage = `url(${img})`;
+                    let mainImage = document.getElementById("main-image");
+                    mainImage.src = img;
+                    // document.getElementById("main-news").style.backgroundImage = `url(${img})`;
                     document.getElementById("main-title").innerHTML = heading;
                 }
             )
@@ -94,9 +100,9 @@ fetch('https://current-news.p.rapidapi.com/news', options)
 function showSearch() {
     let parent = document.getElementById("parent-div");
     let box = document.getElementById("box-overlay");
-
     let searchResults = document.getElementById("display")
     let arrow = document.getElementById("arrow");
+
 
 
     if (parent.style.display === "none") {
@@ -112,6 +118,11 @@ function showSearch() {
         box.style.display = "block";
         searchResults.style.display = "block";
 
+        let menu = document.getElementById("ham-items");
+        if (menu.style.display === "block") {
+            menu.style.display = "none";
+        }
+
         if (lis.length != 0) {
             arrow.style.display = "flex";
         }
@@ -126,7 +137,7 @@ function showSearch() {
 
 function searchNews() {
     const val = document.getElementById("search-news").value;
-    const API_Key = "pub_121401ca00771f49d680f781ee5f7248208e4"
+    const API_Key = "pub_1202395f2c989ad8a2cbe9a0c4aae6ea6fcdf"
     const url = `https://newsdata.io/api/1/news?apikey=${API_Key}&q=${val}&language=en`;
     fetchText(url);
 }
@@ -135,7 +146,6 @@ function searchNews() {
 async function fetchText(url) {
     let response = await fetch(url);
     let data = await response.json();
-    console.log(data.results);
     let arrow = document.getElementById("arrow");
     if (data.results != 0) {
         arrow.style.display = "flex";
@@ -193,21 +203,25 @@ function showNews(data) {
 
             let image = document.createElement('div');
             image.classList.add("image");
+            let imageTag = document.createElement('img');
+            imageTag.style.width = "100%";
+            imageTag.style.height = "100%";
+            image.appendChild(imageTag);
             if (post.image_url !== null) {
-                image.style.backgroundImage = `url('${post.image_url}')`
+                imageTag.src = post.image_url
             }
             else {
-                if (post.category[0] === "top") { image.style.backgroundImage = 'url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtvNKlYPKnDEOTqYIB4xU-U-NkSaePiE9FBQ&usqp=CAU")' }
-                else if (post.category[0] === "business") { image.style.backgroundImage = 'url("https://www.chinimandi.com/wp-content/uploads/2018/06/UAE-business-news-overview.jpg")' }
-                else if (post.category[0] === "entertainment") { image.style.backgroundImage = 'url("https://www.pwc.com/gx/en/industries/entertainment-media/outlook/content/GEMO_2022_Thumbnail_670x377.png")' }
-                else if (post.category[0] === "environment") { image.style.backgroundImage = 'url("https://cdn.pixabay.com/photo/2014/04/17/23/26/environmental-protection-326923__480.jpg")' }
-                else if (post.category[0] === "food") { image.style.backgroundImage = 'url("https://i0.wp.com/post.medicalnewstoday.com/wp-content/uploads/sites/3/2022/07/food_poisoning_egg_gastroenteritis_1296x728_header-1024x575.jpg?w=1155&h=1528")' }
-                else if (post.category[0] === "health") { image.style.backgroundImage = 'url("https://cloudinary.hbs.edu/hbsit/image/upload/s--sFv3MZbN--/f_auto,c_fill,h_375,w_750,/v20200101/D730ED9CC0AF1A0C18B3499EF75E86D7.jpg")' }
-                else if (post.category[0] === "politics") { image.style.backgroundImage = 'url("https://assets.thehansindia.com/h-upload/2022/04/30/1600x960_1289736-politics.jpg")' }
-                else if (post.category[0] === "science") { image.style.backgroundImage = 'url("https://static.theprint.in/wp-content/uploads/2019/11/science.jpg")' }
-                else if (post.category[0] === "technology") { image.style.backgroundImage = 'url("https://rockresearch.com/wp-content/uploads/2017/11/event_technology.jpg")' }
-                else if (post.category[0] === "sports") { image.style.backgroundImage = 'url("https://media.istockphoto.com/photos/various-sport-equipments-on-grass-picture-id949190756?k=20&m=949190756&s=170667a&w=0&h=RBVLWqBNY1OrRyUX-bi-gcEPtszzZOxzmU-ori5467M=")' }
-                else { image.style.backgroundImage = 'url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtW5ogktRRm_R6yUACJR_XRASTzxX_0Mb_ng&usqp=CAU")' }
+                if (post.category[0] === "top") { imageTag.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtvNKlYPKnDEOTqYIB4xU-U-NkSaePiE9FBQ&usqp=CAU" }
+                else if (post.category[0] === "business") { imageTag.src = "https://www.chinimandi.com/wp-content/uploads/2018/06/UAE-business-news-overview.jpg" }
+                else if (post.category[0] === "entertainment") { imageTag.src = "https://www.pwc.com/gx/en/industries/entertainment-media/outlook/content/GEMO_2022_Thumbnail_670x377.png" }
+                else if (post.category[0] === "environment") { imageTag.src = "https://cdn.pixabay.com/photo/2014/04/17/23/26/environmental-protection-326923__480.jpg" }
+                else if (post.category[0] === "food") { imageTag.src = "https://i0.wp.com/post.medicalnewstoday.com/wp-content/uploads/sites/3/2022/07/food_poisoning_egg_gastroenteritis_1296x728_header-1024x575.jpg?w=1155&h=1528" }
+                else if (post.category[0] === "health") { imageTag.src = "https://cloudinary.hbs.edu/hbsit/image/upload/s--sFv3MZbN--/f_auto,c_fill,h_375,w_750,/v20200101/D730ED9CC0AF1A0C18B3499EF75E86D7.jpg" }
+                else if (post.category[0] === "politics") { imageTag.src = "https://assets.thehansindia.com/h-upload/2022/04/30/1600x960_1289736-politics.jpg" }
+                else if (post.category[0] === "science") { imageTag.src = "https://static.theprint.in/wp-content/uploads/2019/11/science.jpg" }
+                else if (post.category[0] === "technology") { imageTag.src = "https://rockresearch.com/wp-content/uploads/2017/11/event_technology.jpg" }
+                else if (post.category[0] === "sports") { imageTag.src = "https://media.istockphoto.com/photos/various-sport-equipments-on-grass-picture-id949190756?k=20&m=949190756&s=170667a&w=0&h=RBVLWqBNY1OrRyUX-bi-gcEPtszzZOxzmU-ori5467M=" }
+                else { image.style.backgroundImage = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtW5ogktRRm_R6yUACJR_XRASTzxX_0Mb_ng&usqp=CAU" }
             }
             li.appendChild(image);
 
@@ -238,9 +252,11 @@ function showNews(data) {
 
                 modalDescription.textContent = content.textContent;
 
-                let imageUrl = image.style.backgroundImage.slice(5, -2);
+                let imageUrl = imageTag.src;
 
                 modalImage.src = imageUrl;
+                modalImage.style.width = "100%";
+                modalImage.style.height = "50%"
 
                 modalTitle.textContent = title.textContent;
 
